@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baby Shower Planner ✨</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blush: #F2C4CE;
+  --blush-light: #FAE8EC;
+  --blush-deep: #E8A0B0;
+  --sage: #A8C5A0;
+  --sage-light: #D8EDD4;
+  --sage-dark: #6B9E62;
+  --cream: #FDF6EE;
+  --gold: #C9A84C;
+  --gold-light: #F0DFA0;
+  --navy: #2C3E6B;
+  --charcoal: #3A3A3A;
+  --muted: #8A8A8A;
+  --white: #FFFFFF;
+  --shadow: 0 4px 24px rgba(44,62,107,0.08);
+  --shadow-hover: 0 8px 32px rgba(44,62,107,0.15);
+  --radius: 16px;
+  --radius-sm: 8px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);min-height:100vh;overflow-x:hidden}
+
+/* ── Header ── */
+.header{background:linear-gradient(135deg,var(--blush) 0%,var(--blush-light) 40%,var(--sage-light) 100%);padding:32px 40px 24px;position:relative;overflow:hidden;text-align:center}
+.header::before{content:'✿ ❀ ✿ ❀ ✿ ❀ ✿ ❀ ✿ ❀ ✿ ❀ ✿ ❀ ✿';position:absolute;top:8px;left:0;right:0;font-size:11px;color:var(--blush-deep);letter-spacing:6px;opacity:.6}
+.header::after{content:'✿ ❀ ✿ ❀ ✿ ❀ ✿ ❀ ✿ ❀ ✿ ❀ ✿ ❀ ✿';position:absolute;bottom:8px;left:0;right:0;font-size:11px;color:var(--sage);letter-spacing:6px;opacity:.6}
+.header-inner h1{font-family:'Playfair Display',serif;font-size:clamp(28px,5vw,48px);color:var(--navy);letter-spacing:-1px;line-height:1.1}
+.header-inner h1 span{color:var(--blush-deep);font-style:italic}
+.header-inner p{color:var(--muted);font-size:14px;margin-top:6px;font-weight:300;letter-spacing:.5px}
+.event-meta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.event-meta input{background:rgba(255,255,255,.7);border:1px solid rgba(201,168,76,.3);border-radius:40px;padding:8px 18px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--navy);outline:none;min-width:180px;text-align:center;backdrop-filter:blur(4px)}
+.event-meta input:focus{border-color:var(--gold);background:rgba(255,255,255,.9)}
+
+/* ── Nav ── */
+.nav{background:var(--white);border-bottom:1px solid rgba(201,168,76,.2);padding:0 40px;display:flex;gap:0;overflow-x:auto;position:sticky;top:0;z-index:100;scrollbar-width:none;box-shadow:0 2px 12px rgba(44,62,107,.06)}
+.nav::-webkit-scrollbar{display:none}
+.nav-btn{padding:16px 20px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--muted);border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:all .2s;letter-spacing:.3px}
+.nav-btn:hover{color:var(--navy)}
+.nav-btn.active{color:var(--navy);border-bottom-color:var(--blush-deep);font-weight:600}
+
+/* ── Layout ── */
+.main{padding:32px 40px;max-width:1200px;margin:0 auto}
+.section{display:none;animation:fadeIn .3s ease}
+.section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.section-title{font-family:'Playfair Display',serif;font-size:28px;color:var(--navy);margin-bottom:6px}
+.section-subtitle{color:var(--muted);font-size:13px;margin-bottom:28px;font-weight:300}
+
+/* ── Cards ── */
+.card{background:var(--white);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);margin-bottom:20px}
+.card-title{font-family:'Playfair Display',serif;font-size:17px;color:var(--navy);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.card-title .icon{font-size:18px}
+
+/* ── Budget ── */
+.budget-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:24px}
+.budget-stat{background:linear-gradient(135deg,var(--blush-light),var(--white));border:1px solid var(--blush);border-radius:var(--radius);padding:20px;text-align:center}
+.budget-stat .amount{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--navy)}
+.budget-stat .label{font-size:12px;color:var(--muted);margin-top:4px;font-weight:500;text-transform:uppercase;letter-spacing:.5px}
+.budget-stat.green .amount{color:var(--sage-dark)}
+.budget-stat.red .amount{color:#C0392B}
+.progress-bar-wrap{background:var(--blush-light);border-radius:40px;height:10px;overflow:hidden;margin:8px 0 16px}
+.progress-bar{background:linear-gradient(90deg,var(--blush-deep),var(--gold));height:100%;border-radius:40px;transition:width .5s ease}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:10px 12px;background:var(--blush-light);color:var(--navy);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+th:first-child{border-radius:8px 0 0 8px}
+th:last-child{border-radius:0 8px 8px 0}
+td{padding:10px 12px;border-bottom:1px solid rgba(242,196,206,.3);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--blush-light);transition:background .15s}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:40px;border:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
+.btn-primary{background:linear-gradient(135deg,var(--blush-deep),var(--gold));color:var(--white);box-shadow:0 2px 12px rgba(201,168,76,.3)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 18px rgba(201,168,76,.4)}
+.btn-sm{padding:5px 12px;font-size:12px}
+.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--blush)}
+.btn-ghost:hover{background:var(--blush-light);color:var(--navy)}
+.btn-danger{background:#fee;color:#C0392B;border:1px solid #fcc}
+.btn-danger:hover{background:#C0392B;color:white}
+.btn-green{background:var(--sage-light);color:var(--sage-dark);border:1px solid var(--sage)}
+.btn-green:hover{background:var(--sage-dark);color:white}
+input,select,textarea{font-family:'DM Sans',sans-serif;font-size:13px;color:var(--charcoal);border:1px solid rgba(201,168,76,.3);border-radius:var(--radius-sm);padding:8px 12px;outline:none;transition:border-color .2s;width:100%}
+input:focus,select:focus,textarea:focus{border-color:var(--gold)}
+.form-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:12px;align-items:end}
+.form-group label{font-size:12px;font-weight:600;color:var(--navy);text-transform:uppercase;letter-spacing:.4px;display:block;margin-bottom:4px}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+.badge-green{background:var(--sage-light);color:var(--sage-dark)}
+.badge-red{background:#fee;color:#C0392B}
+.badge-gold{background:var(--gold-light);color:#7a6010}
+.badge-muted{background:#f0f0f0;color:var(--muted)}
+
+/* ── RSVP ── */
+.rsvp-stats{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.rsvp-stat{flex:1;min-width:100px;text-align:center;padding:14px;border-radius:var(--radius-sm);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+.rsvp-stat .n{font-family:'Playfair Display',serif;font-size:28px;display:block;margin-bottom:2px}
+.rs-all{background:var(--blush-light);color:var(--navy)}
+.rs-yes{background:var(--sage-light);color:var(--sage-dark)}
+.rs-no{background:#fee;color:#C0392B}
+.rs-pending{background:var(--gold-light);color:#7a6010}
+.msg-btns{display:flex;gap:6px;flex-wrap:wrap}
+
+/* ── Menu ── */
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.menu-category{background:var(--blush-light);border-radius:var(--radius);padding:16px;border:1px solid var(--blush)}
+.menu-category h4{font-family:'Playfair Display',serif;font-size:15px;color:var(--navy);margin-bottom:12px}
+.menu-item{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(242,196,206,.5);font-size:13px}
+.menu-item:last-child{border-bottom:none}
+.dietary-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
+.d-tag{font-size:10px;padding:2px 6px;border-radius:10px;background:var(--sage-light);color:var(--sage-dark);font-weight:600}
+
+/* ── Theme ── */
+.theme-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:20px}
+.theme-swatch{border-radius:var(--radius);overflow:hidden;cursor:pointer;border:3px solid transparent;transition:all .2s;position:relative}
+.theme-swatch.selected{border-color:var(--gold)}
+.theme-swatch .swatch-color{height:70px}
+.theme-swatch .swatch-label{font-size:11px;text-align:center;padding:6px;font-weight:600;color:var(--navy);background:white}
+.room-layout{background:var(--cream);border:2px dashed var(--blush);border-radius:var(--radius);min-height:300px;position:relative;overflow:hidden}
+.room-layout-canvas{width:100%;min-height:300px;background:repeating-linear-gradient(0deg,transparent,transparent 29px,rgba(242,196,206,.2) 29px,rgba(242,196,206,.2) 30px),repeating-linear-gradient(90deg,transparent,transparent 29px,rgba(242,196,206,.2) 29px,rgba(242,196,206,.2) 30px)}
+.furniture-item{position:absolute;background:var(--blush-light);border:2px solid var(--blush-deep);border-radius:6px;cursor:move;user-select:none;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--navy);text-align:center;padding:4px;transition:box-shadow .2s}
+.furniture-item:hover,.furniture-item.dragging{box-shadow:0 4px 16px rgba(44,62,107,.2);border-color:var(--gold)}
+.furniture-palette{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.furniture-btn{padding:8px 14px;background:var(--white);border:1px solid var(--blush);border-radius:var(--radius-sm);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;display:flex;align-items:center;gap:4px}
+.furniture-btn:hover{background:var(--blush-light);border-color:var(--blush-deep)}
+
+/* ── Checklist ── */
+.timeline-phase{margin-bottom:24px}
+.phase-header{display:flex;align-items:center;gap:12px;margin-bottom:12px;cursor:pointer}
+.phase-dot{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;border:2px solid var(--white);box-shadow:var(--shadow)}
+.phase-title{font-family:'Playfair Display',serif;font-size:16px;color:var(--navy)}
+.phase-subtitle{font-size:12px;color:var(--muted)}
+.phase-progress{font-size:12px;color:var(--muted);margin-left:auto}
+.checklist-items{padding-left:48px}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid rgba(242,196,206,.2)}
+.check-item:last-child{border-bottom:none}
+.check-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--sage-dark);flex-shrink:0;margin-top:2px;cursor:pointer}
+.check-item .check-label{font-size:13px;flex:1;cursor:pointer}
+.check-item.done .check-label{text-decoration:line-through;color:var(--muted)}
+.check-item .check-date{font-size:11px;color:var(--muted);white-space:nowrap}
+
+/* ── Games ── */
+.games-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.game-card{background:var(--white);border:1px solid var(--blush);border-radius:var(--radius);padding:16px;cursor:pointer;transition:all .2s;position:relative}
+.game-card:hover{box-shadow:var(--shadow-hover);border-color:var(--blush-deep);transform:translateY(-2px)}
+.game-card.selected{border-color:var(--gold);background:var(--gold-light)}
+.game-card h4{font-family:'Playfair Display',serif;font-size:15px;color:var(--navy);margin-bottom:6px}
+.game-card p{font-size:12px;color:var(--muted);line-height:1.5}
+.game-card .game-tags{display:flex;gap:4px;margin-top:8px;flex-wrap:wrap}
+.game-modal{position:fixed;inset:0;background:rgba(44,62,107,.45);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeIn .2s ease;backdrop-filter:blur(4px)}
+.game-modal-inner{background:var(--white);border-radius:var(--radius);max-width:700px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(44,62,107,.2)}
+.game-modal-header{background:linear-gradient(135deg,var(--blush-light),var(--sage-light));padding:24px;border-radius:var(--radius) var(--radius) 0 0;display:flex;justify-content:space-between;align-items:start}
+.game-modal-header h3{font-family:'Playfair Display',serif;font-size:22px;color:var(--navy)}
+.game-modal-body{padding:24px}
+.game-section{margin-bottom:20px}
+.game-section h4{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gold);margin-bottom:8px}
+.game-section p,.game-section li{font-size:13px;line-height:1.7;color:var(--charcoal)}
+.game-section ul,.game-section ol{padding-left:18px}
+.printable-template{background:var(--cream);border:2px dashed var(--blush);border-radius:var(--radius);padding:20px;margin-top:12px}
+.print-line{border-bottom:1px solid var(--blush);margin:10px 0;min-height:28px}
+@media print{.no-print{display:none!important}.print-only{display:block!important}}
+.print-btn{float:right}
+.selected-games-bar{background:linear-gradient(135deg,var(--sage-light),var(--blush-light));border-radius:var(--radius);padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.selected-games-bar span{font-size:13px;color:var(--navy);font-weight:500}
+
+/* ── Responsive ── */
+@media(max-width:640px){
+  .main{padding:16px}
+  .header{padding:24px 16px 16px}
+  .nav{padding:0 8px}
+  .nav-btn{padding:12px 12px;font-size:12px}
+}
+
+/* ── Print styles ── */
+@media print{
+  .nav,.header,.section:not(.active){display:none}
+  .main{padding:0}
+  .card{box-shadow:none;border:1px solid #ddd}
+}
+
+/* ── Misc ── */
+.empty-state{text-align:center;padding:40px;color:var(--muted)}
+.empty-state .es-icon{font-size:40px;margin-bottom:12px}
+.empty-state p{font-size:13px}
+.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:600}
+.close-btn{background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted);line-height:1}
+.close-btn:hover{color:var(--navy)}
+.divider{border:none;border-top:1px solid rgba(242,196,206,.4);margin:20px 0}
+.flex-end{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
+textarea{resize:vertical;min-height:80px}
+.color-input{width:48px;height:36px;padding:2px;cursor:pointer;border-radius:6px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <h1>Baby Shower <span>Planner</span> ✨</h1>
+    <p>Your all-in-one event planning suite · Digital Template</p>
+    <div class="event-meta">
+      <input id="eventName" type="text" placeholder="👶 Mama-to-Be's Name" oninput="saveLocal()">
+      <input id="eventDate" type="date" oninput="saveLocal()">
+      <input id="eventVenue" type="text" placeholder="📍 Venue" oninput="saveLocal()">
+      <input id="eventTime" type="time" oninput="saveLocal()">
+    </div>
+  </div>
+</div>
+
+<nav class="nav">
+  <button class="nav-btn active" onclick="showSection('budget',this)">💰 Budget</button>
+  <button class="nav-btn" onclick="showSection('rsvp',this)">📋 RSVP</button>
+  <button class="nav-btn" onclick="showSection('menu',this)">🍽️ Menu</button>
+  <button class="nav-btn" onclick="showSection('theme',this)">🎨 Theme & Design</button>
+  <button class="nav-btn" onclick="showSection('checklist',this)">✅ Checklist</button>
+  <button class="nav-btn" onclick="showSection('games',this)">📖 Games</button>
+</nav>
+
+<div class="main">
+
+<!-- ══════════ BUDGET ══════════ -->
+<div id="budget" class="section active">
+  <div class="section-title">Budget Tracker</div>
+  <div class="section-subtitle">Manage your baby shower spending in one place</div>
+
+  <div class="budget-summary">
+    <div class="budget-stat">
+      <div class="amount" id="b-total">$0</div>
+      <div class="label">Total Budget</div>
+    </div>
+    <div class="budget-stat">
+      <div class="amount" id="b-spent">$0</div>
+      <div class="label">Spent</div>
+    </div>
+    <div class="budget-stat green">
+      <div class="amount" id="b-remaining">$0</div>
+      <div class="label">Remaining</div>
+    </div>
+    <div class="budget-stat">
+      <div class="amount" id="b-pct">0%</div>
+      <div class="label">Used</div>
+    </div>
+  </div>
+  <div class="card" style="padding:16px 24px">
+    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+      <div class="form-group" style="flex:1;min-width:180px">
+        <label>Total Budget</label>
+        <input type="number" id="totalBudget" placeholder="e.g. 1500" oninput="updateBudget()">
+      </div>
+      <div class="progress-bar-wrap" style="flex:3;min-width:200px;margin:0;align-self:flex-end">
+        <div class="progress-bar" id="budgetBar" style="width:0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">➕</span> Add Expense</div>
+    <div class="form-row">
+      <div class="form-group"><label>Category</label>
+        <select id="b-cat">
+          <option>Venue</option><option>Food & Drinks</option><option>Decorations</option>
+          <option>Invitations</option><option>Favors</option><option>Activities</option>
+          <option>Photography</option><option>Cake</option><option>Flowers</option><option>Other</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Description</label><input type="text" id="b-desc" placeholder="Item description"></div>
+      <div class="form-group"><label>Estimated ($)</label><input type="number" id="b-est" placeholder="0.00"></div>
+      <div class="form-group"><label>Actual ($)</label><input type="number" id="b-act" placeholder="0.00"></div>
+      <div class="form-group"><label>Status</label>
+        <select id="b-status"><option>Pending</option><option>Paid</option><option>Cancelled</option></select>
+      </div>
+      <div class="form-group" style="align-self:flex-end">
+        <button class="btn btn-primary" onclick="addBudgetItem()">Add</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📊</span> Expense Breakdown</div>
+    <div style="overflow-x:auto">
+      <table id="budget-table">
+        <thead><tr><th>Category</th><th>Description</th><th>Estimated</th><th>Actual</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="budget-tbody"></tbody>
+      </table>
+    </div>
+    <div id="budget-empty" class="empty-state"><div class="es-icon">💸</div><p>No expenses yet. Add your first item above.</p></div>
+  </div>
+</div>
+
+<!-- ══════════ RSVP ══════════ -->
+<div id="rsvp" class="section">
+  <div class="section-title">RSVP Manager</div>
+  <div class="section-subtitle">Track your guest list and send messages with ease</div>
+
+  <div class="rsvp-stats">
+    <div class="rsvp-stat rs-all"><span class="n" id="rsvp-total">0</span>Invited</div>
+    <div class="rsvp-stat rs-yes"><span class="n" id="rsvp-yes">0</span>Attending</div>
+    <div class="rsvp-stat rs-no"><span class="n" id="rsvp-no">0</span>Declined</div>
+    <div class="rsvp-stat rs-pending"><span class="n" id="rsvp-pending">0</span>Pending</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📥</span> Bulk Import from CSV / Excel</div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Upload a <strong>.csv</strong> or <strong>.xlsx</strong> file with columns: <code style="background:var(--cream);padding:2px 6px;border-radius:4px;font-size:12px">Name, Email, Phone, Status, Guests</code> (header row required). Status values: <em>Yes, No, Pending</em>.</p>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <button class="btn btn-primary" onclick="document.getElementById('csv-upload').click()">📂 Choose File</button>
+      <span id="csv-filename" style="font-size:13px;color:var(--muted)">No file chosen</span>
+      <button class="btn btn-ghost btn-sm" onclick="downloadGuestTemplate()">⬇️ Download Template</button>
+    </div>
+    <input type="file" id="csv-upload" accept=".csv,.xlsx,.xls" style="display:none" onchange="importGuestFile(this)">
+    <div id="import-preview" style="display:none;margin-top:16px">
+      <div style="font-size:13px;font-weight:600;color:var(--navy);margin-bottom:8px" id="import-summary"></div>
+      <div style="overflow-x:auto;max-height:220px;overflow-y:auto;border:1px solid var(--blush);border-radius:var(--radius-sm)">
+        <table id="import-table">
+          <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Status</th><th>Guests</th><th>Issue</th></tr></thead>
+          <tbody id="import-tbody"></tbody>
+        </table>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button class="btn btn-primary" id="import-confirm-btn" onclick="confirmImport()">✓ Import Valid Rows</button>
+        <button class="btn btn-ghost" onclick="cancelImport()">✕ Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">👤</span> Add Guest</div>
+    <div class="form-row">
+      <div class="form-group"><label>Full Name</label><input type="text" id="g-name" placeholder="Guest name"></div>
+      <div class="form-group"><label>Email</label><input type="email" id="g-email" placeholder="email@example.com"></div>
+      <div class="form-group"><label>Phone</label><input type="tel" id="g-phone" placeholder="+1 (555) 000-0000"></div>
+      <div class="form-group"><label>RSVP Status</label>
+        <select id="g-status"><option value="Pending">Pending</option><option value="Yes">Attending ✓</option><option value="No">Declined ✗</option></select>
+      </div>
+      <div class="form-group"><label># Guests</label><input type="number" id="g-guests" value="1" min="1" max="10"></div>
+      <div class="form-group" style="align-self:flex-end"><button class="btn btn-primary" onclick="addGuest()">Add Guest</button></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📨</span> Bulk Message</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+      <select id="msg-filter" style="width:auto">
+        <option value="All">All Guests</option>
+        <option value="Pending">Pending Only</option>
+        <option value="Yes">Attending Only</option>
+        <option value="No">Declined Only</option>
+      </select>
+      <button class="btn btn-green btn-sm" onclick="bulkEmail()">📧 Email Selected</button>
+      <button class="btn btn-primary btn-sm" onclick="bulkSMS()">💬 Text Selected</button>
+    </div>
+    <div class="form-group" style="margin-bottom:8px">
+      <label>Message Template</label>
+      <textarea id="msg-template" rows="3">Hi [Name]! 🌸 You're invited to [Mama]'s Baby Shower on [Date] at [Venue]. Please RSVP by visiting [link] or replying to this message. We can't wait to celebrate with you! 💕</textarea>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📋</span> Guest List</div>
+    <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+      <input type="text" id="guest-search" placeholder="🔍 Search guests..." style="max-width:220px" oninput="renderGuests()">
+      <select id="guest-filter-status" style="width:auto" onchange="renderGuests()">
+        <option value="">All Statuses</option>
+        <option value="Yes">Attending</option>
+        <option value="No">Declined</option>
+        <option value="Pending">Pending</option>
+      </select>
+      <button class="btn btn-ghost btn-sm no-print" onclick="window.print()">🖨️ Print List</button>
+    </div>
+    <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Status</th><th>Guests</th><th>Actions</th></tr></thead>
+        <tbody id="guest-tbody"></tbody>
+      </table>
+    </div>
+    <div id="guest-empty" class="empty-state"><div class="es-icon">🎀</div><p>No guests added yet.</p></div>
+  </div>
+</div>
+
+<!-- ══════════ MENU ══════════ -->
+<div id="menu" class="section">
+  <div class="section-title">Menu Planner</div>
+  <div class="section-subtitle">Design your perfect baby shower menu</div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">➕</span> Add Menu Item</div>
+    <div class="form-row">
+      <div class="form-group"><label>Category</label>
+        <select id="m-cat">
+          <option>Appetizers</option><option>Main Dishes</option><option>Salads & Sides</option>
+          <option>Desserts</option><option>Cake & Cupcakes</option><option>Drinks</option>
+          <option>Mocktails</option><option>Snacks</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Item Name</label><input type="text" id="m-name" placeholder="Dish name"></div>
+      <div class="form-group"><label>Serves</label><input type="number" id="m-serves" placeholder="e.g. 12"></div>
+      <div class="form-group"><label>Cost ($)</label><input type="number" id="m-cost" placeholder="0.00"></div>
+      <div class="form-group"><label>Dietary Tags</label>
+        <select id="m-diet" multiple style="height:60px">
+          <option value="GF">Gluten-Free</option><option value="V">Vegetarian</option>
+          <option value="VG">Vegan</option><option value="DF">Dairy-Free</option>
+          <option value="NF">Nut-Free</option><option value="H">Halal</option>
+        </select>
+      </div>
+      <div class="form-group" style="align-self:flex-end"><button class="btn btn-primary" onclick="addMenuItem()">Add</button></div>
+    </div>
+    <div class="form-group" style="margin-top:8px"><label>Notes / Recipe Link</label><input type="text" id="m-notes" placeholder="Notes or URL"></div>
+  </div>
+
+  <div id="menu-display"></div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📊</span> Menu Summary</div>
+    <div class="budget-summary" id="menu-stats">
+      <div class="budget-stat"><div class="amount" id="m-total-items">0</div><div class="label">Total Items</div></div>
+      <div class="budget-stat"><div class="amount" id="m-total-cost">$0</div><div class="label">Est. Food Cost</div></div>
+    </div>
+    <div class="flex-end no-print">
+      <button class="btn btn-ghost" onclick="window.print()">🖨️ Print Menu Card</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ THEME ══════════ -->
+<div id="theme" class="section">
+  <div class="section-title">Theme & Design</div>
+  <div class="section-subtitle">Choose your aesthetic and plan your room layout</div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🎨</span> Color Palette</div>
+    <div class="theme-grid" id="theme-presets">
+      <div class="theme-swatch selected" onclick="selectTheme(this,'#F2C4CE','#A8C5A0','#C9A84C')" data-name="Blush & Sage">
+        <div class="swatch-color" style="background:linear-gradient(135deg,#F2C4CE,#A8C5A0)"></div>
+        <div class="swatch-label">Blush & Sage</div>
+      </div>
+      <div class="theme-swatch" onclick="selectTheme(this,'#B0D4F1','#F9E4B7','#FFFFFF')" data-name="Sky Blue & Gold">
+        <div class="swatch-color" style="background:linear-gradient(135deg,#B0D4F1,#F9E4B7)"></div>
+        <div class="swatch-label">Sky & Gold</div>
+      </div>
+      <div class="theme-swatch" onclick="selectTheme(this,'#D4A5C9','#F7E0C2','#8B6B5D')" data-name="Lavender Boho">
+        <div class="swatch-color" style="background:linear-gradient(135deg,#D4A5C9,#F7E0C2)"></div>
+        <div class="swatch-label">Lavender Boho</div>
+      </div>
+      <div class="theme-swatch" onclick="selectTheme(this,'#A8D8EA','#E8F4F8','#5B8DB8')" data-name="Ocean Baby">
+        <div class="swatch-color" style="background:linear-gradient(135deg,#A8D8EA,#E8F4F8)"></div>
+        <div class="swatch-label">Ocean Baby</div>
+      </div>
+      <div class="theme-swatch" onclick="selectTheme(this,'#C5E8C5','#F9F5EB','#6B9E62')" data-name="Garden Party">
+        <div class="swatch-color" style="background:linear-gradient(135deg,#C5E8C5,#F9F5EB)"></div>
+        <div class="swatch-label">Garden Party</div>
+      </div>
+      <div class="theme-swatch" onclick="selectTheme(this,'#FFD700','#FFF8DC','#8B6914')" data-name="Sunshine">
+        <div class="swatch-color" style="background:linear-gradient(135deg,#FFD700,#FFF8DC)"></div>
+        <div class="swatch-label">Sunshine</div>
+      </div>
+      <div class="theme-swatch" onclick="selectTheme(this,'#F4A7B9','#FCE4EC','#C2185B')" data-name="Hot Pink Glam">
+        <div class="swatch-color" style="background:linear-gradient(135deg,#F4A7B9,#FCE4EC)"></div>
+        <div class="swatch-label">Hot Pink Glam</div>
+      </div>
+      <div class="theme-swatch" onclick="selectTheme(this,'#E8D5B7','#F5ECD7','#8B7355')" data-name="Boho Neutral">
+        <div class="swatch-color" style="background:linear-gradient(135deg,#E8D5B7,#F5ECD7)"></div>
+        <div class="swatch-label">Boho Neutral</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:8px">
+      <span style="font-size:13px;color:var(--muted)">Custom colors:</span>
+      <div class="form-group" style="margin:0"><label style="font-size:11px">Primary</label><input type="color" class="color-input" id="c1" value="#F2C4CE"></div>
+      <div class="form-group" style="margin:0"><label style="font-size:11px">Secondary</label><input type="color" class="color-input" id="c2" value="#A8C5A0"></div>
+      <div class="form-group" style="margin:0"><label style="font-size:11px">Accent</label><input type="color" class="color-input" id="c3" value="#C9A84C"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🏷️</span> Theme Details</div>
+    <div class="form-row">
+      <div class="form-group"><label>Theme Name</label><input type="text" id="theme-name" placeholder="e.g. Enchanted Garden" oninput="saveLocal()"></div>
+      <div class="form-group"><label>Motif / Style</label>
+        <select id="theme-motif" onchange="saveLocal()">
+          <option>Floral</option><option>Safari / Animals</option><option>Woodland</option>
+          <option>Under the Sea</option><option>Rainbow</option><option>Boho</option>
+          <option>Vintage</option><option>Modern Minimal</option><option>Celestial / Stars</option>
+          <option>Custom</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Dress Code</label><input type="text" id="theme-dress" placeholder="e.g. Garden Party Attire" oninput="saveLocal()"></div>
+    </div>
+    <div class="form-group"><label>Decoration Notes</label>
+      <textarea id="theme-notes" placeholder="Balloon arch at entrance, floral centerpieces on each table, welcome sign..." oninput="saveLocal()"></textarea>
+    </div>
+    <div class="form-group"><label>Vendor Contacts</label>
+      <textarea id="theme-vendors" placeholder="Florist: Bloom & Co – (555) 123-4567&#10;Balloon Artist: Party Pop – (555) 987-6543" oninput="saveLocal()"></textarea>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🗺️</span> Room Layout Planner</div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Drag furniture items to plan your space. Click items to label them.</p>
+    <div class="furniture-palette">
+      <button class="furniture-btn" onclick="addFurniture('🪑 Chairs',80,50)">🪑 Chairs</button>
+      <button class="furniture-btn" onclick="addFurniture('🍽️ Food Table',160,60)">🍽️ Food Table</button>
+      <button class="furniture-btn" onclick="addFurniture('🎁 Gift Table',120,55)">🎁 Gift Table</button>
+      <button class="furniture-btn" onclick="addFurniture('🎂 Cake Table',100,55)">🎂 Cake Table</button>
+      <button class="furniture-btn" onclick="addFurniture('🌟 Guest of Honor',140,60)">🌟 Honor Seat</button>
+      <button class="furniture-btn" onclick="addFurniture('🎮 Game Area',150,120)">🎮 Game Area</button>
+      <button class="furniture-btn" onclick="addFurniture('📸 Photo Booth',130,100)">📸 Photo Booth</button>
+      <button class="furniture-btn" onclick="addFurniture('🚪 Door',60,20)">🚪 Door</button>
+      <button class="furniture-btn" onclick="clearLayout()" style="background:#fee;border-color:#fcc;color:#C0392B">🗑️ Clear</button>
+    </div>
+    <div class="room-layout">
+      <div class="room-layout-canvas" id="room-canvas"></div>
+    </div>
+    <p style="font-size:11px;color:var(--muted);margin-top:8px">💡 Tip: Drag items to reposition. Double-click to rename.</p>
+  </div>
+</div>
+
+<!-- ══════════ CHECKLIST ══════════ -->
+<div id="checklist" class="section">
+  <div class="section-title">Planning Checklist</div>
+  <div class="section-subtitle">Stay on track from 6 months out to the big day</div>
+
+  <div class="card" style="padding:16px 24px">
+    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px">
+      <span style="font-size:13px;font-weight:600;color:var(--navy)">Overall Progress:</span>
+      <div class="progress-bar-wrap" style="flex:1;min-width:200px;margin:0">
+        <div class="progress-bar" id="overall-progress" style="width:0%"></div>
+      </div>
+      <span style="font-size:13px;color:var(--muted)" id="progress-text">0 of 0 tasks</span>
+      <button class="btn btn-ghost btn-sm" onclick="addCustomTask()">➕ Add Task</button>
+    </div>
+    <hr style="border:none;border-top:1px solid var(--blush);margin:0 0 14px">
+    <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap">
+      <div class="form-group" style="margin:0;flex:1;min-width:180px">
+        <label>📅 Event Date <span style="font-weight:300;text-transform:none;color:var(--muted)">(auto-fills phase dates)</span></label>
+        <input type="date" id="cl-event-date" onchange="autofillPhaseDates()">
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="openCalendarModal()" style="margin-bottom:1px">📆 Export to Calendar</button>
+      <button class="btn btn-ghost btn-sm" onclick="downloadICS()" style="margin-bottom:1px">⬇️ Download .ics File</button>
+    </div>
+  </div>
+
+  <!-- Calendar Export Modal -->
+  <div id="cal-modal" style="display:none;position:fixed;inset:0;background:rgba(44,62,107,.45);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)" onclick="closeCalModal(event)">
+    <div style="background:var(--white);border-radius:var(--radius);max-width:540px;width:100%;box-shadow:0 20px 60px rgba(44,62,107,.2);overflow:hidden" onclick="event.stopPropagation()">
+      <div style="background:linear-gradient(135deg,var(--blush-light),var(--sage-light));padding:20px 24px;display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:4px">Planning Checklist</div>
+          <div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--navy)">Export to Calendar</div>
+        </div>
+        <button class="close-btn" onclick="closeCalModal()">✕</button>
+      </div>
+      <div style="padding:24px">
+        <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Choose how you'd like to add your planning tasks to your calendar. Each phase deadline becomes a calendar event with all tasks listed in the description.</p>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <button class="btn btn-primary" style="justify-content:center" onclick="openGoogleCalendar()">
+            <img src="https://www.gstatic.com/images/branding/product/1x/calendar_2020q4_48dp.png" style="width:18px;height:18px" onerror="this.style.display='none'"> Open in Google Calendar
+          </button>
+          <button class="btn btn-green" style="justify-content:center" onclick="openOutlookCalendar()">
+            📧 Open in Outlook Calendar (Web)
+          </button>
+          <button class="btn btn-ghost" style="justify-content:center" onclick="downloadICS();closeCalModal()">
+            ⬇️ Download .ics (Apple Calendar, Outlook Desktop, etc.)
+          </button>
+        </div>
+        <p style="font-size:11px;color:var(--muted);margin-top:14px">💡 <strong>.ics files</strong> work with Apple Calendar, Outlook, and most calendar apps. Just open the downloaded file after saving.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="checklist-container"></div>
+</div>
+
+<!-- ══════════ GAMES ══════════ -->
+<div id="games" class="section">
+  <div class="section-title">Baby Shower Games</div>
+  <div class="section-subtitle">Browse 50 games and click any title to view instructions & printable templates</div>
+
+  <div class="selected-games-bar">
+    <span>🎯 Selected for your event: <strong id="selected-count">0</strong> games</span>
+    <button class="btn btn-primary btn-sm" onclick="printSelectedGames()">🖨️ Print Selected Game Packets</button>
+    <button class="btn btn-ghost btn-sm" onclick="clearSelectedGames()">Clear Selection</button>
+  </div>
+
+  <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+    <input type="text" id="game-search" placeholder="🔍 Search games..." style="max-width:220px" oninput="filterGames()">
+    <select id="game-cat-filter" style="width:auto" onchange="filterGames()">
+      <option value="">All Categories</option>
+      <option value="Classic">Classic</option>
+      <option value="Active">Active</option>
+      <option value="Creative">Creative</option>
+      <option value="Trivia">Trivia</option>
+      <option value="Guessing">Guessing</option>
+      <option value="Icebreaker">Icebreaker</option>
+    </select>
+  </div>
+
+  <div class="games-grid" id="games-grid"></div>
+</div>
+
+</div><!-- /main -->
+
+<!-- Game Modal -->
+<div id="game-modal" class="game-modal" style="display:none" onclick="closeGameModal(event)">
+  <div class="game-modal-inner" id="game-modal-inner" onclick="event.stopPropagation()">
+    <div class="game-modal-header">
+      <div>
+        <div id="modal-category" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:4px"></div>
+        <h3 id="modal-title"></h3>
+      </div>
+      <button class="close-btn" onclick="closeGameModal()">✕</button>
+    </div>
+    <div class="game-modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+//  DATA STORE
+// ══════════════════════════════════════════
+let budgetItems=JSON.parse(localStorage.getItem('bsp_budget')||'[]');
+let guests=JSON.parse(localStorage.getItem('bsp_guests')||'[]');
+let menuItems=JSON.parse(localStorage.getItem('bsp_menu')||'[]');
+let checkItems=JSON.parse(localStorage.getItem('bsp_check')||'null');
+let selectedGames=JSON.parse(localStorage.getItem('bsp_games')||'[]');
+let furnitureItems=JSON.parse(localStorage.getItem('bsp_furniture')||'[]');
+
+function saveLocal(){
+  localStorage.setItem('bsp_budget',JSON.stringify(budgetItems));
+  localStorage.setItem('bsp_guests',JSON.stringify(guests));
+  localStorage.setItem('bsp_menu',JSON.stringify(menuItems));
+  localStorage.setItem('bsp_check',JSON.stringify(checkItems));
+  localStorage.setItem('bsp_games',JSON.stringify(selectedGames));
+  localStorage.setItem('bsp_furniture',JSON.stringify(furnitureItems));
+  ['eventName','eventDate','eventVenue','eventTime'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)localStorage.setItem('bsp_'+id,el.value);
+  });
+}
+
+function loadLocal(){
+  ['eventName','eventDate','eventVenue','eventTime'].forEach(id=>{
+    const el=document.getElementById(id);
+    const v=localStorage.getItem('bsp_'+id);
+    if(el&&v)el.value=v;
+  });
+}
+
+// ══════════════════════════════════════════
+//  NAV
+// ══════════════════════════════════════════
+function showSection(id,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ══════════════════════════════════════════
+//  BUDGET
+// ══════════════════════════════════════════
+function addBudgetItem(){
+  const cat=document.getElementById('b-cat').value;
+  const desc=document.getElementById('b-desc').value;
+  const est=parseFloat(document.getElementById('b-est').value)||0;
+  const act=parseFloat(document.getElementById('b-act').value)||0;
+  const status=document.getElementById('b-status').value;
+  if(!desc){alert('Please enter a description');return;}
+  budgetItems.push({id:Date.now(),cat,desc,est,act,status});
+  document.getElementById('b-desc').value='';
+  document.getElementById('b-est').value='';
+  document.getElementById('b-act').value='';
+  saveLocal();renderBudget();
+}
+function deleteBudget(id){
+  budgetItems=budgetItems.filter(i=>i.id!==id);saveLocal();renderBudget();
+}
+function updateBudget(){renderBudget();}
+function renderBudget(){
+  const total=parseFloat(document.getElementById('totalBudget').value)||0;
+  const spent=budgetItems.reduce((s,i)=>s+(i.act||i.est||0),0);
+  const remaining=total-spent;
+  const pct=total>0?Math.min(100,(spent/total*100)):0;
+  document.getElementById('b-total').textContent='$'+total.toFixed(2);
+  document.getElementById('b-spent').textContent='$'+spent.toFixed(2);
+  document.getElementById('b-remaining').textContent='$'+remaining.toFixed(2);
+  document.getElementById('b-pct').textContent=pct.toFixed(0)+'%';
+  document.getElementById('budgetBar').style.width=pct+'%';
+  const tbody=document.getElementById('budget-tbody');
+  const empty=document.getElementById('budget-empty');
+  if(budgetItems.length===0){tbody.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+  tbody.innerHTML=budgetItems.map(i=>`
+    <tr>
+      <td><span class="badge badge-gold">${i.cat}</span></td>
+      <td>${i.desc}</td>
+      <td>$${i.est.toFixed(2)}</td>
+      <td>$${i.act.toFixed(2)}</td>
+      <td><span class="badge ${i.status==='Paid'?'badge-green':i.status==='Cancelled'?'badge-red':'badge-muted'}">${i.status}</span></td>
+      <td><button class="btn btn-danger btn-sm" onclick="deleteBudget(${i.id})">✕</button></td>
+    </tr>`).join('');
+}
+
+// ══════════════════════════════════════════
+//  RSVP
+// ══════════════════════════════════════════
+function addGuest(){
+  const name=document.getElementById('g-name').value.trim();
+  if(!name){alert('Please enter a name');return;}
+  guests.push({id:Date.now(),name,email:document.getElementById('g-email').value,phone:document.getElementById('g-phone').value,status:document.getElementById('g-status').value,count:parseInt(document.getElementById('g-guests').value)||1});
+  ['g-name','g-email','g-phone'].forEach(id=>document.getElementById(id).value='');
+  saveLocal();renderGuests();
+}
+function deleteGuest(id){guests=guests.filter(g=>g.id!==id);saveLocal();renderGuests();}
+function updateGuestStatus(id,status){const g=guests.find(g=>g.id===id);if(g){g.status=status;saveLocal();renderGuests();}}
+function renderGuests(){
+  const q=document.getElementById('guest-search').value.toLowerCase();
+  const sf=document.getElementById('guest-filter-status').value;
+  const filtered=guests.filter(g=>(g.name.toLowerCase().includes(q)||g.email.toLowerCase().includes(q))&&(sf===''||g.status===sf));
+  const tbody=document.getElementById('guest-tbody');
+  const empty=document.getElementById('guest-empty');
+  document.getElementById('rsvp-total').textContent=guests.length;
+  document.getElementById('rsvp-yes').textContent=guests.filter(g=>g.status==='Yes').length;
+  document.getElementById('rsvp-no').textContent=guests.filter(g=>g.status==='No').length;
+  document.getElementById('rsvp-pending').textContent=guests.filter(g=>g.status==='Pending').length;
+  if(filtered.length===0){tbody.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+  tbody.innerHTML=filtered.map(g=>`
+    <tr>
+      <td><strong>${g.name}</strong></td>
+      <td><a href="mailto:${g.email}" style="color:var(--navy)">${g.email||'—'}</a></td>
+      <td>${g.phone||'—'}</td>
+      <td><select style="width:auto;font-size:12px" onchange="updateGuestStatus(${g.id},this.value)">
+        <option ${g.status==='Pending'?'selected':''}>Pending</option>
+        <option ${g.status==='Yes'?'selected':''}>Yes</option>
+        <option ${g.status==='No'?'selected':''}>No</option>
+      </select></td>
+      <td>${g.count}</td>
+      <td class="msg-btns">
+        ${g.email?`<button class="btn btn-sm btn-green" onclick="emailGuest('${g.name}','${g.email}')">📧</button>`:''}
+        ${g.phone?`<button class="btn btn-sm btn-primary" onclick="smsGuest('${g.name}','${g.phone}')">💬</button>`:''}
+        <button class="btn btn-sm btn-danger" onclick="deleteGuest(${g.id})">✕</button>
+      </td>
+    </tr>`).join('');
+}
+function emailGuest(name,email){
+  const mama=document.getElementById('eventName').value||'the mama-to-be';
+  const date=document.getElementById('eventDate').value;
+  const venue=document.getElementById('eventVenue').value||'a special venue';
+  let msg=document.getElementById('msg-template').value.replace('[Name]',name).replace('[Mama]',mama).replace('[Date]',date).replace('[Venue]',venue).replace('[link]','our RSVP link');
+  window.location.href=`mailto:${email}?subject=Baby Shower Invitation for ${mama}&body=${encodeURIComponent(msg)}`;
+}
+function smsGuest(name,phone){
+  const mama=document.getElementById('eventName').value||'the mama-to-be';
+  const date=document.getElementById('eventDate').value;
+  let msg=document.getElementById('msg-template').value.replace('[Name]',name).replace('[Mama]',mama).replace('[Date]',date).replace('[Venue]',document.getElementById('eventVenue').value||'the venue').replace('[link]','our link');
+  window.location.href=`sms:${phone}?body=${encodeURIComponent(msg)}`;
+}
+function bulkEmail(){
+  const filter=document.getElementById('msg-filter').value;
+  const filtered=filter==='All'?guests:guests.filter(g=>g.status===filter);
+  const emails=filtered.filter(g=>g.email).map(g=>g.email).join(',');
+  if(!emails){alert('No guests with email found for the selected filter.');return;}
+  const mama=document.getElementById('eventName').value||'the mama-to-be';
+  window.location.href=`mailto:${emails}?subject=Baby Shower Invitation for ${mama}`;
+}
+function bulkSMS(){
+  alert('To send bulk texts, copy the numbers below and use your messaging app:\n\n'+
+    (document.getElementById('msg-filter').value==='All'?guests:guests.filter(g=>g.status===document.getElementById('msg-filter').value)).filter(g=>g.phone).map(g=>g.phone).join(', '));
+}
+
+// ══════════════════════════════════════════
+//  MENU
+// ══════════════════════════════════════════
+function addMenuItem(){
+  const name=document.getElementById('m-name').value.trim();
+  if(!name){alert('Please enter a dish name');return;}
+  const sel=document.getElementById('m-diet');
+  const diets=Array.from(sel.selectedOptions).map(o=>o.value);
+  menuItems.push({id:Date.now(),cat:document.getElementById('m-cat').value,name,serves:document.getElementById('m-serves').value,cost:parseFloat(document.getElementById('m-cost').value)||0,diets,notes:document.getElementById('m-notes').value});
+  document.getElementById('m-name').value='';document.getElementById('m-notes').value='';
+  document.getElementById('m-serves').value='';document.getElementById('m-cost').value='';
+  saveLocal();renderMenu();
+}
+function deleteMenu(id){menuItems=menuItems.filter(i=>i.id!==id);saveLocal();renderMenu();}
+function renderMenu(){
+  const cats={};menuItems.forEach(i=>{if(!cats[i.cat])cats[i.cat]=[];cats[i.cat].push(i);});
+  const display=document.getElementById('menu-display');
+  if(menuItems.length===0){display.innerHTML='<div class="empty-state"><div class="es-icon">🍽️</div><p>No menu items yet.</p></div>';return;}
+  display.innerHTML='<div class="menu-grid">'+Object.entries(cats).map(([cat,items])=>`
+    <div class="menu-category">
+      <h4>${cat}</h4>
+      ${items.map(i=>`
+        <div class="menu-item">
+          <div>
+            <div><strong>${i.name}</strong>${i.serves?' <span style="font-size:11px;color:var(--muted)">· Serves '+i.serves+'</span>':''}</div>
+            ${i.diets.length?`<div class="dietary-tags">${i.diets.map(d=>`<span class="d-tag">${d}</span>`).join('')}</div>`:''}
+            ${i.notes?`<div style="font-size:11px;color:var(--muted);margin-top:2px">${i.notes}</div>`:''}
+          </div>
+          <div style="text-align:right;flex-shrink:0">
+            ${i.cost?'<div style="font-size:12px;color:var(--sage-dark);font-weight:600">$'+i.cost.toFixed(2)+'</div>':''}
+            <button class="btn btn-danger btn-sm" style="margin-top:4px" onclick="deleteMenu(${i.id})">✕</button>
+          </div>
+        </div>`).join('')}
+    </div>`).join('')+'</div>';
+  document.getElementById('m-total-items').textContent=menuItems.length;
+  document.getElementById('m-total-cost').textContent='$'+menuItems.reduce((s,i)=>s+i.cost,0).toFixed(2);
+}
+
+// ══════════════════════════════════════════
+//  THEME & ROOM LAYOUT
+// ══════════════════════════════════════════
+function selectTheme(el,c1,c2,c3){
+  document.querySelectorAll('.theme-swatch').forEach(s=>s.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('c1').value=c1;
+  document.getElementById('c2').value=c2;
+  document.getElementById('c3').value=c3;
+}
+
+let dragEl=null,dragOx=0,dragOy=0;
+function addFurniture(label,w,h){
+  const canvas=document.getElementById('room-canvas');
+  const el=document.createElement('div');
+  el.className='furniture-item';
+  el.style.cssText=`width:${w}px;height:${h}px;left:20px;top:20px`;
+  el.textContent=label;
+  el.dataset.label=label;
+  el.addEventListener('mousedown',startDrag);
+  el.addEventListener('touchstart',startDragTouch,{passive:true});
+  el.addEventListener('dblclick',()=>{const n=prompt('Rename:',el.dataset.label);if(n){el.textContent=n;el.dataset.label=n;saveFurniture();}});
+  canvas.appendChild(el);
+  saveFurniture();
+}
+function startDrag(e){
+  dragEl=e.currentTarget;dragEl.classList.add('dragging');
+  const r=dragEl.getBoundingClientRect();const cr=dragEl.parentElement.getBoundingClientRect();
+  dragOx=e.clientX-r.left+cr.left-(dragEl.parentElement.offsetLeft);
+  dragOy=e.clientY-r.top+cr.top-(dragEl.parentElement.offsetTop);
+  e.preventDefault();
+}
+function startDragTouch(e){
+  dragEl=e.currentTarget;dragEl.classList.add('dragging');
+  const t=e.touches[0];
+  const r=dragEl.getBoundingClientRect();const cr=dragEl.parentElement.getBoundingClientRect();
+  dragOx=t.clientX-r.left+cr.left-dragEl.parentElement.offsetLeft;
+  dragOy=t.clientY-r.top+cr.top-dragEl.parentElement.offsetTop;
+}
+document.addEventListener('mousemove',e=>{if(!dragEl)return;moveDrag(e.clientX,e.clientY);});
+document.addEventListener('touchmove',e=>{if(!dragEl)return;moveDrag(e.touches[0].clientX,e.touches[0].clientY);},{passive:true});
+function moveDrag(cx,cy){
+  const canvas=document.getElementById('room-canvas');
+  const cr=canvas.getBoundingClientRect();
+  let x=cx-cr.left-dragOx+canvas.scrollLeft;
+  let y=cy-cr.top-dragOy+canvas.scrollTop;
+  x=Math.max(0,Math.min(canvas.offsetWidth-dragEl.offsetWidth,x));
+  y=Math.max(0,Math.min(canvas.offsetHeight-dragEl.offsetHeight,y));
+  dragEl.style.left=x+'px';dragEl.style.top=y+'px';
+}
+document.addEventListener('mouseup',()=>{if(dragEl){dragEl.classList.remove('dragging');saveFurniture();dragEl=null;}});
+document.addEventListener('touchend',()=>{if(dragEl){dragEl.classList.remove('dragging');saveFurniture();dragEl=null;}});
+function saveFurniture(){
+  furnitureItems=[];
+  document.querySelectorAll('#room-canvas .furniture-item').forEach(el=>{
+    furnitureItems.push({label:el.dataset.label,w:el.offsetWidth,h:el.offsetHeight,x:parseInt(el.style.left),y:parseInt(el.style.top)});
+  });
+  saveLocal();
+}
+function clearLayout(){if(confirm('Clear all furniture?')){document.getElementById('room-canvas').innerHTML='';furnitureItems=[];saveLocal();}}
+function restoreFurniture(){
+  furnitureItems.forEach(f=>{
+    const canvas=document.getElementById('room-canvas');
+    const el=document.createElement('div');
+    el.className='furniture-item';
+    el.style.cssText=`width:${f.w}px;height:${f.h}px;left:${f.x}px;top:${f.y}px`;
+    el.textContent=f.label;el.dataset.label=f.label;
+    el.addEventListener('mousedown',startDrag);
+    el.addEventListener('touchstart',startDragTouch,{passive:true});
+    el.addEventListener('dblclick',()=>{const n=prompt('Rename:',el.dataset.label);if(n){el.textContent=n;el.dataset.label=n;saveFurniture();}});
+    canvas.appendChild(el);
+  });
+}
+
+// ══════════════════════════════════════════
+//  CHECKLIST
+// ══════════════════════════════════════════
+const defaultChecklist=[
+  {phase:'6 Months Before',color:'#D4A5C9',bg:'#F5E6F6',items:[
+    'Set the date & time for the baby shower',
+    'Determine overall budget',
+    'Choose co-hosts if any',
+    'Start the guest list',
+    'Pick a venue (home, restaurant, event space)',
+    'Choose a theme or color scheme',
+    'Book the venue if not at home'
+  ]},
+  {phase:'5 Months Before',color:'#A8C5A0',bg:'#E8F4E8',items:[
+    'Reserve a caterer or plan the menu',
+    'Book a photographer if desired',
+    'Order or design invitations',
+    'Create a baby registry reminder for guests',
+    'Plan activities and games',
+    'Research decoration vendors'
+  ]},
+  {phase:'4 Months Before',color:'#B0D4F1',bg:'#E8F4FF',items:[
+    'Send out save-the-dates',
+    'Order decorations (balloons, banners, florals)',
+    'Finalize guest list',
+    'Plan the seating arrangement',
+    'Book entertainment or special guests',
+    'Order or plan the cake / dessert table'
+  ]},
+  {phase:'3 Months Before',color:'#F2C4CE',bg:'#FDE8EC',items:[
+    'Send formal invitations',
+    'Finalize menu and confirm caterer',
+    'Purchase or order party favors',
+    'Plan activities and buy game supplies',
+    'Create event timeline / run of show',
+    'Confirm all vendor bookings'
+  ]},
+  {phase:'2 Months Before',color:'#C9A84C',bg:'#F5ECD0',items:[
+    'Follow up on RSVPs',
+    'Finalize headcount and adjust catering accordingly',
+    'Design printed menus & place cards',
+    'Create playlist for the event',
+    'Purchase mama-to-be corsage or sash',
+    'Plan diaper bag or gift basket for mom-to-be',
+    'Prepare "About the Baby" questionnaire for games'
+  ]},
+  {phase:'1 Month Before',color:'#A8D8EA',bg:'#E8F6FB',items:[
+    'Confirm final guest count',
+    'Final venue walkthrough',
+    'Confirm delivery dates for orders',
+    'Print invitations / programs / menus',
+    'Shop for non-perishable food items',
+    'Finalize day-of schedule',
+    'Delegate tasks to helpers'
+  ]},
+  {phase:'1–2 Weeks Before',color:'#6B9E62',bg:'#D8F0D8',items:[
+    'Purchase perishable ingredients',
+    'Confirm all helpers know their roles',
+    'Prepare printable game cards',
+    'Assemble favor bags',
+    'Make or order the cake',
+    'Prep decoration kit / supply boxes',
+    'Charge camera batteries'
+  ]},
+  {phase:'Day Before',color:'#E8A0B0',bg:'#FDE8EC',items:[
+    'Decorate the venue',
+    'Set up tables and chairs',
+    'Arrange centerpieces and florals',
+    'Set up the gift table',
+    'Chill beverages',
+    'Prepare the welcome sign',
+    'Lay out game supplies',
+    'Confirm all vendors for tomorrow',
+    'Prepare host/hostess outfit'
+  ]},
+  {phase:'Day Of the Event',color:'#2C3E6B',bg:'#E8ECF8',items:[
+    'Set up food and drink stations',
+    'Put out game cards and supplies',
+    'Welcome guests at the door',
+    'Assign someone to manage gifts',
+    'Assign someone to take photos',
+    'Start games on schedule',
+    'Serve cake during gift opening',
+    'Distribute party favors',
+    'Thank guests as they leave',
+    'Send thank-you card list to mama-to-be'
+  ]}
+];
+
+function initChecklist(){
+  if(!checkItems){
+    checkItems=defaultChecklist.map(phase=>({
+      phase:phase.phase,color:phase.color,bg:phase.bg,
+      open:true,
+      date:'',  // user-set deadline for this phase
+      items:phase.items.map(t=>({text:t,done:false,custom:false}))
+    }));
+  }
+  // Restore event date field
+  const saved=localStorage.getItem('bsp_cl_event_date');
+  if(saved){const el=document.getElementById('cl-event-date');if(el)el.value=saved;}
+  renderChecklist();
+}
+
+function renderChecklist(){
+  const container=document.getElementById('checklist-container');
+  let total=0,done=0;
+  checkItems.forEach(p=>p.items.forEach(i=>{total++;if(i.done)done++;}));
+  document.getElementById('progress-text').textContent=`${done} of ${total} tasks`;
+  const pct=total>0?(done/total*100):0;
+  document.getElementById('overall-progress').style.width=pct+'%';
+
+  container.innerHTML=checkItems.map((phase,pi)=>{
+    const isLast=pi===checkItems.length-1;
+    const isSecondLast=pi===checkItems.length-2;
+    const icon=isLast?'🌟':isSecondLast?'🌸':'📅';
+    const phaseDone=phase.items.filter(i=>i.done).length;
+    const phaseTotal=phase.items.length;
+    const allDone=phaseDone===phaseTotal&&phaseTotal>0;
+
+    // Date display
+    const dateTag=phase.date
+      ? `<span style="font-size:11px;background:var(--gold-light);color:#7a6010;padding:2px 8px;border-radius:12px;font-weight:600;margin-left:6px">📅 ${formatDate(phase.date)}</span>`
+      : '';
+
+    return `
+    <div class="card timeline-phase">
+      <div class="phase-header" onclick="togglePhase(${pi})">
+        <div class="phase-dot" style="background:${phase.bg};border-color:${phase.color};${allDone?'box-shadow:0 0 0 3px '+phase.color+'55':''}">
+          <span style="font-size:16px">${allDone?'✅':icon}</span>
+        </div>
+        <div style="flex:1">
+          <div class="phase-title" style="display:flex;align-items:center;flex-wrap:wrap;gap:4px">
+            ${phase.phase}${dateTag}
+          </div>
+          <div class="phase-subtitle">${phaseDone} / ${phaseTotal} complete</div>
+        </div>
+        <div class="phase-progress">${phase.open?'▲':'▼'}</div>
+      </div>
+      ${phase.open?`
+      <div style="padding:10px 0 4px 48px">
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px">
+          <div class="form-group" style="margin:0;display:flex;align-items:center;gap:8px">
+            <label style="font-size:11px;white-space:nowrap;margin:0">Phase Deadline:</label>
+            <input type="date" value="${phase.date||''}" style="width:auto;font-size:12px;padding:5px 10px"
+              onchange="setPhaseDate(${pi},this.value)" onclick="event.stopPropagation()">
+          </div>
+          ${phase.date?`<button class="btn btn-primary btn-sm" onclick="addPhaseToCalendar(${pi});event.stopPropagation()">📆 Add to Calendar</button>`:''}
+        </div>
+      </div>
+      <div class="checklist-items">
+        ${phase.items.map((item,ii)=>`
+          <div class="check-item ${item.done?'done':''}">
+            <input type="checkbox" ${item.done?'checked':''} onchange="toggleCheck(${pi},${ii},this.checked)">
+            <span class="check-label" onclick="toggleCheck(${pi},${ii},!${item.done?'true':'false'})">${item.text}</span>
+            ${item.custom?`<button class="btn btn-danger btn-sm" onclick="deleteCheck(${pi},${ii})">✕</button>`:''}
+          </div>`).join('')}
+      </div>`:''}
+    </div>`;
+  }).join('');
+}
+
+function formatDate(d){
+  if(!d)return'';
+  const [y,m,day]=d.split('-');
+  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${months[parseInt(m)-1]} ${parseInt(day)}, ${y}`;
+}
+
+function setPhaseDate(pi,val){
+  checkItems[pi].date=val;
+  saveLocal();renderChecklist();
+}
+
+function togglePhase(pi){checkItems[pi].open=!checkItems[pi].open;saveLocal();renderChecklist();}
+function toggleCheck(pi,ii,val){checkItems[pi].items[ii].done=val;saveLocal();renderChecklist();}
+function deleteCheck(pi,ii){checkItems[pi].items.splice(ii,1);saveLocal();renderChecklist();}
+function addCustomTask(){
+  const phase=prompt('Which phase?\n'+checkItems.map((p,i)=>`${i+1}. ${p.phase}`).join('\n')+'\n\nEnter number:');
+  const pi=parseInt(phase)-1;
+  if(isNaN(pi)||pi<0||pi>=checkItems.length)return;
+  const text=prompt('Task description:');
+  if(!text)return;
+  checkItems[pi].items.push({text,done:false,custom:true});
+  saveLocal();renderChecklist();
+}
+
+// ── Auto-fill phase dates from event date ──
+function autofillPhaseDates(){
+  const eventDateVal=document.getElementById('cl-event-date').value;
+  if(!eventDateVal){alert('Please enter the event date first.');return;}
+  localStorage.setItem('bsp_cl_event_date',eventDateVal);
+  const eventDate=new Date(eventDateVal+'T12:00:00');
+
+  // Offsets in days from event date (negative = before)
+  const offsets=[-180,-150,-120,-90,-60,-30,-14,-1,0];
+  offsets.forEach((offset,pi)=>{
+    if(!checkItems[pi])return;
+    const d=new Date(eventDate);
+    d.setDate(d.getDate()+offset);
+    checkItems[pi].date=d.toISOString().split('T')[0];
+  });
+  saveLocal();renderChecklist();
+}
+
+// ── ICS generation ──
+function buildICS(){
+  const mama=document.getElementById('eventName').value||'Baby Shower';
+  const venue=document.getElementById('eventVenue').value||'';
+  const phases=checkItems.filter(p=>p.date);
+  if(phases.length===0){alert('Please set at least one phase date before exporting.');return null;}
+
+  const stamp=new Date().toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';
+  let ics='BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Baby Shower Planner//EN\r\nCALSCALE:GREGORIAN\r\nMETHOD:PUBLISH\r\n';
+
+  phases.forEach((phase,i)=>{
+    const uid=`bsp-${Date.now()}-${i}@babyshowerplanner`;
+    const dtstart=phase.date.replace(/-/g,'');
+    const dtend=phase.date.replace(/-/g,'');
+    const tasks=phase.items.map((t,n)=>`${n+1}. ${t.text}${t.done?' ✓':''}`).join('\\n');
+    const summary=`🌸 ${mama}: ${phase.phase}`;
+    const desc=`Baby Shower Planning – ${phase.phase}\\n\\nTasks:\\n${tasks}${venue?'\\n\\nVenue: '+venue:''}`;
+    ics+=`BEGIN:VEVENT\r\nUID:${uid}\r\nDTSTAMP:${stamp}\r\nDTSTART;VALUE=DATE:${dtstart}\r\nDTEND;VALUE=DATE:${dtend}\r\nSUMMARY:${summary}\r\nDESCRIPTION:${desc}\r\nBEGIN:VALARM\r\nTRIGGER:-PT0S\r\nACTION:DISPLAY\r\nDESCRIPTION:${summary}\r\nEND:VALARM\r\nEND:VEVENT\r\n`;
+  });
+  ics+='END:VCALENDAR';
+  return ics;
+}
+
+function downloadICS(){
+  const ics=buildICS();if(!ics)return;
+  const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='baby_shower_planning_checklist.ics';
+  a.click();
+}
+
+function addPhaseToCalendar(pi){
+  const phase=checkItems[pi];
+  if(!phase.date){alert('Set a date for this phase first.');return;}
+  showCalendarChoiceForPhase(pi);
+}
+
+function showCalendarChoiceForPhase(pi){
+  const phase=checkItems[pi];
+  const mama=document.getElementById('eventName').value||'Baby Shower';
+  const tasks=phase.items.map((t,n)=>`${n+1}. ${t.text}`).join('\n');
+  const title=encodeURIComponent(`🌸 ${mama}: ${phase.phase}`);
+  const details=encodeURIComponent(`Baby Shower Planning Tasks:\n\n${tasks}`);
+  const date=phase.date.replace(/-/g,'');
+  const nextDay=new Date(phase.date+'T12:00:00');
+  nextDay.setDate(nextDay.getDate()+1);
+  const endDate=nextDay.toISOString().split('T')[0].replace(/-/g,'');
+
+  const googleUrl=`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${date}/${endDate}&details=${details}`;
+  const outlookUrl=`https://outlook.live.com/calendar/0/deeplink/compose?subject=${title}&startdt=${phase.date}&enddt=${phase.date}&body=${details}`;
+
+  // Mini choice dialog
+  const div=document.createElement('div');
+  div.id='phase-cal-choice';
+  div.style.cssText='position:fixed;inset:0;background:rgba(44,62,107,.4);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px)';
+  div.innerHTML=`
+    <div style="background:white;border-radius:16px;padding:24px;max-width:360px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.2)">
+      <div style="font-family:'Playfair Display',serif;font-size:18px;color:var(--navy);margin-bottom:6px">Add to Calendar</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:18px">${phase.phase} · ${formatDate(phase.date)}</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <a href="${googleUrl}" target="_blank" class="btn btn-primary" style="justify-content:center;text-decoration:none">📅 Google Calendar</a>
+        <a href="${outlookUrl}" target="_blank" class="btn btn-green" style="justify-content:center;text-decoration:none">📧 Outlook Web</a>
+        <button class="btn btn-ghost" style="justify-content:center" onclick="downloadSingleICS(${pi});document.getElementById('phase-cal-choice').remove()">⬇️ Download .ics</button>
+        <button class="btn btn-ghost" style="justify-content:center;color:var(--muted)" onclick="document.getElementById('phase-cal-choice').remove()">Cancel</button>
+      </div>
+    </div>`;
+  document.body.appendChild(div);
+}
+
+function downloadSingleICS(pi){
+  const phase=checkItems[pi];
+  const mama=document.getElementById('eventName').value||'Baby Shower';
+  const tasks=phase.items.map((t,n)=>`${n+1}. ${t.text}${t.done?' ✓':''}`).join('\\n');
+  const stamp=new Date().toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';
+  const dtstart=phase.date.replace(/-/g,'');
+  const ics=`BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Baby Shower Planner//EN\r\nBEGIN:VEVENT\r\nUID:bsp-single-${Date.now()}@planner\r\nDTSTAMP:${stamp}\r\nDTSTART;VALUE=DATE:${dtstart}\r\nDTEND;VALUE=DATE:${dtstart}\r\nSUMMARY:🌸 ${mama}: ${phase.phase}\r\nDESCRIPTION:Tasks:\\n${tasks}\r\nEND:VEVENT\r\nEND:VCALENDAR`;
+  const blob=new Blob([ics],{type:'text/calendar'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`${phase.phase.replace(/\s+/g,'_')}.ics`;a.click();
+}
+
+function openCalendarModal(){
+  const phases=checkItems.filter(p=>p.date);
+  if(phases.length===0){alert('Set dates for your phases first, or enter the event date above and click "Auto-fill Dates".');return;}
+  document.getElementById('cal-modal').style.display='flex';
+}
+function closeCalModal(e){
+  if(!e||e.target===document.getElementById('cal-modal'))
+    document.getElementById('cal-modal').style.display='none';
+}
+function openGoogleCalendar(){
+  // Open each phase as a separate Google Calendar event
+  const mama=document.getElementById('eventName').value||'Baby Shower';
+  checkItems.filter(p=>p.date).forEach((phase,i)=>{
+    setTimeout(()=>{
+      const tasks=phase.items.map((t,n)=>`${n+1}. ${t.text}`).join('\n');
+      const title=encodeURIComponent(`🌸 ${mama}: ${phase.phase}`);
+      const details=encodeURIComponent(tasks);
+      const date=phase.date.replace(/-/g,'');
+      window.open(`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${date}/${date}&details=${details}`,'_blank');
+    },i*400);
+  });
+  closeCalModal();
+}
+function openOutlookCalendar(){
+  const mama=document.getElementById('eventName').value||'Baby Shower';
+  checkItems.filter(p=>p.date).forEach((phase,i)=>{
+    setTimeout(()=>{
+      const tasks=phase.items.map((t,n)=>`${n+1}. ${t.text}`).join('%0A');
+      const title=encodeURIComponent(`🌸 ${mama}: ${phase.phase}`);
+      window.open(`https://outlook.live.com/calendar/0/deeplink/compose?subject=${title}&startdt=${phase.date}&enddt=${phase.date}&body=${tasks}`,'_blank');
+    },i*400);
+  });
+  closeCalModal();
+}
+
+
+// ══════════════════════════════════════════
+//  GAMES DATA
+// ══════════════════════════════════════════
+const GAMES=[
+  {id:1,name:"Baby Bingo",cat:"Classic",desc:"Guests mark off gifts as they're opened",players:"5–30",time:"30–60 min",materials:"Bingo cards, daubers or markers",instructions:"Print one card per guest. As the mom-to-be opens gifts, guests mark off the matching item on their card. First guest to mark five in a row (across, down, or diagonally) shouts 'BINGO!' and wins a prize. The center square is a FREE SPACE!",bingo:true,template:[{title:"Baby Bingo Card",squares:["Onesies","Diapers","Baby Wipes","Blanket","Stuffed Animal","Pacifier","Bottles","Baby Clothes","Burp Cloths","Baby Monitor","Swaddle","Car Seat","FREE\nSPACE","Stroller","Baby Carrier","Baby Lotion","Nail Clippers","Baby Book","Night Light","Baby Swing","Breast Pump","Nursing Pillow","Bath Set","High Chair","Crib Mobile"]}]},
+  {id:2,name:"Don't Say Baby",cat:"Icebreaker",desc:"Classic game where saying 'baby' costs you a pin",players:"Any",time:"Whole party",materials:"Safety pins or clothespins (one per guest)",instructions:"Give each guest a clothespin or safety pin when they arrive. If someone catches you saying the word 'baby,' they take your pin. The guest with the most pins at the end wins a prize.",template:[{title:"Don't Say Baby – Rules Card",lines:["Rule: You may NOT say the word 'BABY'","If caught: the catcher takes your pin","Collect the most pins to WIN!","Prize for the winner: _______________"]}]},
+  {id:3,name:"Guess the Baby Food",cat:"Guessing",desc:"Identify mystery baby food flavors blindfolded",players:"Any",time:"20 min",materials:"Baby food jars (labels removed), spoons, answer sheets",instructions:"Remove labels from 8–10 baby food jars and number them. Give guests a sheet to write their guesses. The person who identifies the most flavors wins. Tip: include unusual ones like mango-kale!",template:[{title:"Guess the Baby Food – Answer Sheet",lines:["Jar #1: _______________","Jar #2: _______________","Jar #3: _______________","Jar #4: _______________","Jar #5: _______________","Jar #6: _______________","Jar #7: _______________","Jar #8: _______________","Jar #9: _______________","Jar #10: _______________"]}]},
+  {id:4,name:"Baby Shower Trivia",cat:"Trivia",desc:"Test guests' knowledge of pregnancy and baby facts",players:"Any",time:"20 min",materials:"Trivia question sheets, pens",instructions:"Prepare 15–20 trivia questions about pregnancy, baby milestones, and parenting. Read questions aloud or distribute sheets. Most correct answers wins.",template:[{title:"Baby Trivia – Question Sheet",lines:["1. How many weeks is a full-term pregnancy? ___","2. What is the average newborn weight? ___","3. At what age do babies typically first smile? ___","4. What is the soft spot on a baby's head called? ___","5. When do most babies start crawling? ___","6. How many diapers does a newborn use per day? ___","7. At what month can you find out baby's sex? ___","8. What is the first milk a mother produces called? ___","9. When do babies typically say their first words? ___","10. What is 'swaddling'? ___"]}]},
+  {id:5,name:"Price Is Right: Baby Edition",cat:"Guessing",desc:"Guess the retail price of baby products",players:"Any",time:"25 min",materials:"Printed price cards, baby items or pictures",instructions:"Display 10–15 baby products (or pictures). Guests write down what they think each item costs. Award points for the closest guess without going over. Highest points wins.",template:[{title:"Price Is Right – Guess Sheet",lines:["Item 1 – Baby Monitor: $___","Item 2 – Stroller: $___","Item 3 – Breast Pump: $___","Item 4 – Diaper Genie: $___","Item 5 – Baby Swing: $___","Item 6 – White Noise Machine: $___","Item 7 – Newborn Clothes Set: $___","Item 8 – Car Seat: $___","Item 9 – Baby Carrier: $___","Item 10 – Video Baby Monitor: $___"]}]},
+  {id:6,name:"Mommy's Measurements",cat:"Guessing",desc:"Guess mama's belly size with ribbon or string",players:"Any",time:"15 min",materials:"Ribbon or string, scissors",instructions:"Cut a length of ribbon you think equals the circumference of the mama-to-be's belly. The person closest without going under wins. Mama measures her belly at the end to reveal the winner.",template:[{title:"Mommy's Measurements – Record Sheet",lines:["Guest Name | Estimated Length | Difference","___________|__________________|__________","___________|__________________|__________","___________|__________________|__________","___________|__________________|__________","___________|__________________|__________"]}]},
+  {id:7,name:"Baby Shower Word Scramble",cat:"Classic",desc:"Unscramble baby-related words against the clock",players:"Any",time:"15 min",materials:"Printed scramble sheets, pens, timer",instructions:"Distribute word scramble sheets with 15–20 baby-related words. Set a 3-minute timer. The guest who unscrambles the most wins.",template:[{title:"Baby Word Scramble",lines:["1. LDELRA = ___________","2. HSGIH RCIA = ___________","3. IEARSP = ___________","4. AYPMD = ___________","5. LNOAKBBT = ___________","6. RCULD = ___________","7. SLETARR = ___________","8. PERNYTANG = ___________","9. BDIELAWSS = ___________","10. MHRO = ___________","11. FEPACI = ___________","12. ATBH TUB = ___________"]}]},
+  {id:8,name:"What's in the Diaper Bag?",cat:"Guessing",desc:"Feel items in the diaper bag without looking",players:"Any",time:"20 min",materials:"Diaper bag, 10–15 baby items, answer sheets",instructions:"Fill a diaper bag with baby items. Blindfold each guest who takes a turn feeling inside (without peeking!) for 30 seconds, then writes their guesses. Most correct wins.",template:[{title:"Diaper Bag Mystery – Answer Sheet",lines:["Item 1: _______________","Item 2: _______________","Item 3: _______________","Item 4: _______________","Item 5: _______________","Item 6: _______________","Item 7: _______________","Item 8: _______________","Item 9: _______________","Item 10: _______________"]}]},
+  {id:9,name:"Baby Shower Mad Libs",cat:"Creative",desc:"Fill in hilarious blanks to create a birth story",players:"Any",time:"15 min",materials:"Mad Libs sheets, pens",instructions:"Distribute Mad Libs sheets. Ask guests for words (noun, verb, adjective, etc.) without revealing context. Then read the funny story aloud. Best reaction wins a prize!",template:[{title:"Baby Shower Mad Libs",lines:["The baby was born on a ___(adjective)___ day in _____(city)___.","Mama let out a __(adjective)__ cry when she felt ___(noun)___.","The doctor, Dr. ___(name)___, said '__(exclamation)__!'","Baby weighed ___(number)___ pounds and looked like a tiny ___(animal)___.","Dad immediately started ___(verb ending in -ing)___ around the room.","Grandma fainted and then asked for ___(food)___.","Everyone agreed the baby's first word will be '___(word)___'."]}]},
+  {id:10,name:"Name That Tune: Lullabies",cat:"Trivia",desc:"Identify lullabies and children's songs",players:"Any",time:"20 min",materials:"Music playlist, answer sheets",instructions:"Play the first 5–10 seconds of 10 lullabies and children's songs. Guests write the title and artist. Most correct answers wins.",template:[{title:"Name That Tune – Answer Sheet",lines:["Song #1: _______________","Song #2: _______________","Song #3: _______________","Song #4: _______________","Song #5: _______________","Song #6: _______________","Song #7: _______________","Song #8: _______________","Song #9: _______________","Song #10: _______________"]}]},
+  {id:11,name:"Advice Cards for Mom",cat:"Creative",desc:"Guests write heartfelt parenting advice",players:"Any",time:"Throughout party",materials:"Printed advice cards, pens",instructions:"Place advice cards at each table. Guests fill them out during the shower and drop in a box. Mom reads them aloud or saves as keepsakes.",template:[{title:"Advice for Mama Card",lines:["Dear ___(mama's name)___,","My best parenting advice for you is:","________________________________________","________________________________________","The most important thing to remember is:","________________________________________","________________________________________","With love, _______________"]}]},
+  {id:12,name:"Celebrity Baby Name Match",cat:"Trivia",desc:"Match celebrities to their children's unusual names",players:"Any",time:"15 min",materials:"Match sheets, pens",instructions:"Create a two-column sheet with celebrity names and baby names shuffled. Guests draw lines to match them. Most correct wins.",template:[{title:"Celebrity Baby Name Match",lines:["Draw a line from the celebrity to their baby's name:","","CELEBRITIES          BABY NAMES","Beyoncé              Saint","Kim Kardashian       Blue Ivy","Gwyneth Paltrow      North","Elon Musk            Apple","Gwen Stefani         X Æ A-12","Ashlee Simpson       Zuma","Mia Farrow           Pilot"]}]},
+  {id:13,name:"Baby Photo Guess",cat:"Guessing",desc:"Match baby photos to adult guests",players:"Any",time:"30 min",materials:"Baby photos from guests, numbered display, answer sheets",instructions:"Ask guests to submit a baby photo when RSVPing. Display numbered photos at the party. Guests try to match each photo to the adult. Most correct wins.",template:[{title:"Baby Photo Guess – Answer Sheet",lines:["Photo #1 is: _______________","Photo #2 is: _______________","Photo #3 is: _______________","Photo #4 is: _______________","Photo #5 is: _______________","Photo #6 is: _______________","Photo #7 is: _______________","Photo #8 is: _______________","Photo #9 is: _______________","Photo #10 is: _______________"]}]},
+  {id:14,name:"Baby Shower Pictionary",cat:"Active",desc:"Draw and guess baby-related words",players:"6–20",time:"30 min",materials:"Whiteboard or large paper, markers, timer, word cards",instructions:"Divide into teams. One player draws a baby-related word while their team guesses. Set a 60-second timer. Teams alternate. Most points after 10 rounds wins.",template:[{title:"Pictionary Word Cards – Cut & Fold",lines:["Diaper | Stroller | Pacifier | Cradle","Baby Monitor | Burp Cloth | Onesie | Rattle","Teething Ring | Baby Wipes | Crib | Lullaby","High Chair | Baby Bottle | Swaddle | Bib","Breast Pump | Changing Table | Baby Carrier | Mobile"]}]},
+  {id:15,name:"Nursery Rhyme Quiz",cat:"Trivia",desc:"Complete famous nursery rhyme lyrics",players:"Any",time:"15 min",materials:"Quiz sheets, pens",instructions:"Distribute sheets with the first line of 15 nursery rhymes. Guests fill in what comes next. Most correct wins.",template:[{title:"Nursery Rhyme Quiz",lines:["1. 'Twinkle, twinkle, little star...' = ___","2. 'Jack and Jill went up the hill...' = ___","3. 'Humpty Dumpty sat on a wall...' = ___","4. 'Little Miss Muffet...' = ___","5. 'Mary had a little lamb...' = ___","6. 'Hickory dickory dock...' = ___","7. 'Baa baa black sheep...' = ___","8. 'Old MacDonald had a farm...' = ___","9. 'The wheels on the bus...' = ___","10. 'Row, row, row your boat...' = ___"]}]},
+  {id:16,name:"Baby Bottle Chug",cat:"Active",desc:"Drink juice from baby bottles racing to finish first",players:"4–10",time:"10 min",materials:"Baby bottles, juice or water",instructions:"Fill baby bottles with juice or water. On 'go,' contestants chug through the nipple. First to finish wins. Warning: it's harder than it looks!",template:[{title:"Baby Bottle Chug – Score Card",lines:["Player | Finish Time | Place","_______|_____________|______","_______|_____________|______","_______|_____________|______","_______|_____________|______","_______|_____________|______"]}]},
+  {id:17,name:"Onesie Decorating",cat:"Creative",desc:"Decorate onesies with fabric markers as a keepsake",players:"Any",time:"30–45 min",materials:"Plain white onesies, fabric markers, stencils",instructions:"Set up a decorating station with onesies in various sizes and fabric markers. Guests create a one-of-a-kind wardrobe for baby. Mom takes them all home!",template:[{title:"Onesie Decorating Station – Instructions",lines:["1. Choose your onesie size","2. Pick up fabric markers","3. Let your creativity shine!","4. Sign the tag inside so mama knows who made it","5. Allow to dry fully before placing in the keepsake box"]}]},
+  {id:18,name:"Diaper Raffle",cat:"Classic",desc:"Guests bring diapers for raffle ticket entries",players:"Any",time:"Throughout party",materials:"Raffle tickets, box, prize",instructions:"Ask guests to bring a pack of diapers (any size) to be entered into a raffle. For each pack, they receive one ticket. Draw at the end of the shower for the prize.",template:[{title:"Diaper Raffle Ticket",lines:["🍼 DIAPER RAFFLE 🍼","","Guest Name: _______________","Ticket #: _______________","","Bring a pack of diapers to earn","one entry per pack!","","Drawing held at: ___(time)___"]}]},
+  {id:19,name:"How Big Is Mama's Belly?",cat:"Guessing",desc:"Tear toilet paper to match belly size",players:"Any",time:"10 min",materials:"Roll of toilet paper",instructions:"Pass a toilet paper roll around. Each guest tears off how many squares they think will wrap around mama's belly. Then measure! Closest without going under wins.",template:[{title:"Belly Size Guess – Record",lines:["Guest Name | Squares Guessed | Difference","___________|_________________|__________","___________|_________________|__________","___________|_________________|__________","Actual belly measurement: ___ squares"]}]},
+  {id:20,name:"Build-a-Lullaby",cat:"Creative",desc:"Teams compose an original lullaby for baby",players:"6–20",time:"20 min",materials:"Paper, pens, optional instruments",instructions:"Divide guests into teams of 3–4. Give 10 minutes to write a 4-line lullaby for the baby. Teams perform their lullabies. Mom votes for her favorite.",template:[{title:"Build-a-Lullaby – Worksheet",lines:["Team Name: _______________","","Line 1: ___________________________","Line 2: ___________________________","Line 3: ___________________________","Line 4: ___________________________","","Tune (circle one): Twinkle Twinkle / Rock-a-Bye / Original"]}]},
+  {id:21,name:"ABC Baby Book",cat:"Creative",desc:"Each guest decorates a letter for a keepsake book",players:"Any",time:"Throughout party",materials:"26 blank pages with large letters, art supplies",instructions:"Assign each guest a letter of the alphabet. They decorate their page with a word, illustration, or message for baby starting with that letter. Bind into a keepsake book.",template:[{title:"ABC Baby Book Page",lines:["My letter is: ___","","This letter stands for: ___________________________","","A little message for you, baby:","_______________________________________________","_______________________________________________","","With love from: _______________"]}]},
+  {id:22,name:"Predict Baby's Stats",cat:"Guessing",desc:"Guess baby's birth date, weight, and length",players:"Any",time:"Throughout party",materials:"Prediction cards, sealed box",instructions:"Each guest completes a prediction card with their guesses for baby's arrival date, weight, and length. Seal in a box — mom compares after birth to find the closest predictor!",template:[{title:"Baby Stats Prediction Card",lines:["I predict baby will arrive on: _______________","I predict baby will weigh: ___ lbs ___ oz","I predict baby will be: ___ inches long","I predict baby's first word will be: _______________","I predict baby's hair color will be: _______________","","Guest name: _______________"]}]},
+  {id:23,name:"Two Truths & a Lie: Baby Edition",cat:"Icebreaker",desc:"Share two true facts and one lie about parenthood/pregnancy",players:"6–20",time:"20 min",materials:"Index cards, pens",instructions:"Each guest writes two true statements and one lie about pregnancy, babies, or their own childhood. Others guess which is the lie. Great for learning about each other!",template:[{title:"Two Truths & a Lie Card",lines:["My name: _______________","","Truth #1: _______________________________________________","","Truth #2: _______________________________________________","","Lie: _______________________________________________"]}]},
+  {id:24,name:"Baby Shower Scavenger Hunt",cat:"Active",desc:"Find hidden baby items around the venue",players:"Any",time:"20 min",materials:"Small baby items, list, prizes",instructions:"Hide 15 small baby items around the venue before guests arrive. Give each guest a list. First to find all items wins. Can be played individually or in teams.",template:[{title:"Scavenger Hunt List",lines:["Find and check off each item:","☐ Pacifier","☐ Baby sock","☐ Diaper pin","☐ Mini onesie","☐ Baby spoon","☐ Teether","☐ Mini bottle","☐ Baby hair clip","☐ Cotton ball","☐ Baby nail file","☐ Rattle","☐ Mini toy"]}]},
+  {id:25,name:"Emoji Baby Movie Quiz",cat:"Trivia",desc:"Decode baby or pregnancy movies shown as emojis",players:"Any",time:"15 min",materials:"Quiz sheets or display screen",instructions:"Show sequences of emojis representing movie titles involving babies or kids. Guests write their guesses. Most correct wins.",template:[{title:"Emoji Movie Quiz – Answer Sheet",lines:["1. 👶🏠🤱 = _______________","2. 🐣🦁👑 = _______________","3. 🐠🌊🔍 = _______________","4. 🧍‍♀️👶🏽🎀 = _______________","5. 🐟🎣👴 = _______________","6. 🤖👦❤️ = _______________","7. 🐘🌧️🎪 = _______________","8. 👩‍⚕️💉🍼 = _______________"]}]},
+  {id:26,name:"Wishes for Baby",cat:"Creative",desc:"Guests write birthday wishes for baby's milestone years",players:"Any",time:"Throughout party",materials:"Printed wish cards, envelopes, pens",instructions:"Give each guest cards labeled for specific ages (1st birthday, 5th, 13th, 18th, 21st). They write heartfelt notes. Seal in envelopes and give to mom to open on those birthdays.",template:[{title:"Birthday Wish Card",lines:["Dear Baby,","","On your ___(age)___ birthday, I hope you...","_______________________________________________","_______________________________________________","_______________________________________________","_______________________________________________","","Remember: _______________________________________________","","Love always, _______________  |  Date written: ___"]}]},
+  {id:27,name:"Baby Shower Charades",cat:"Active",desc:"Act out baby and parenting scenarios",players:"6–20",time:"25 min",materials:"Charades word cards, timer",instructions:"Write baby/parenting scenarios on cards. Teams take turns acting out while teammates guess. 60 seconds per turn. Most guesses in 10 rounds wins.",template:[{title:"Charades Word Cards – Cut Out",lines:["Changing a diaper | Breastfeeding | Swaddling","Colic crying | Rocking to sleep | First steps","Baby laughing | Teething | Nap time","Morning sickness | Baby's first bath | Tummy time","Diaper blowout | Pushing a stroller | Car seat struggle"]}]},
+  {id:28,name:"Stinky Diaper Game",cat:"Classic",desc:"Identify 'poopy' diapers (melted chocolate bars)",players:"Any",time:"20 min",materials:"Diapers, various chocolate bars, answer sheets",instructions:"Melt different candy bars inside diapers using a microwave. Number the diapers. Guests sniff and look to guess which candy bar is in each diaper. Funniest game of the shower!",template:[{title:"Stinky Diaper – Answer Sheet",lines:["Diaper #1: _______________","Diaper #2: _______________","Diaper #3: _______________","Diaper #4: _______________","Diaper #5: _______________","Diaper #6: _______________","Diaper #7: _______________","Diaper #8: _______________"]}]},
+  {id:29,name:"Baby Name Brainstorm",cat:"Creative",desc:"Suggest names based on given criteria",players:"Any",time:"15 min",materials:"Answer sheets, pens",instructions:"Give guests creative prompts: names starting with a certain letter, themed names, names that rhyme with mama's name, etc. Mom picks her favorites for fun.",template:[{title:"Baby Name Brainstorm",lines:["A name starting with the letter ___: _______________","A flower-inspired name: _______________","A nature name: _______________","A classic/timeless name: _______________","A unique/uncommon name: _______________","A name that means strength: _______________","My personal favorite suggestion: _______________","","Your name: _______________"]}]},
+  {id:30,name:"Musical Baby Shower",cat:"Active",desc:"Pass the gift while music plays; whoever holds it when music stops keeps it",players:"8–20",time:"15 min",materials:"Wrapped gift, music",instructions:"Guests sit in a circle and pass a wrapped gift while music plays. When music stops, whoever holds it opens the outer layer, reveals another layer, and play continues. The person who unwraps the final layer wins.",template:[{title:"Musical Baby Shower – Player Rules",lines:["• Sit in a circle","• Pass the gift as fast as you can","• When music stops, you unwrap ONE layer","• Keep playing until the final prize is revealed","• NO peeking ahead!"]}]},
+  {id:31,name:"Guess That Nursery Rhyme Character",cat:"Trivia",desc:"Identify nursery rhyme characters from clues",players:"Any",time:"15 min",materials:"Clue cards or sheet",instructions:"Read clues describing nursery rhyme characters and have guests guess the character and rhyme. Fastest correct answer per round earns a point.",template:[{title:"Nursery Rhyme Character Clues",lines:["1. 'I sat on a wall and took a great fall.' Who am I? ___","2. 'I went to fetch water and tumbled down.' Who am I? ___","3. 'I am made of sugar and spice.' Who am I? ___","4. 'I lost my sheep.' Who am I? ___","5. 'I ran away with the spoon.' Who am I? ___","6. 'I played a pipe and led rats away.' Who am I? ___","7. 'I climbed the beanstalk.' Who am I? ___"]}]},
+  {id:32,name:"Baby Trivia Relay",cat:"Active",desc:"Teams race to answer trivia questions",players:"10–30",time:"25 min",materials:"Question cards, timer, whiteboard to track scores",instructions:"Divide into teams. One person from each team races to the host to answer a question. First correct answer earns a point. Rotate players each round. 15 rounds total.",template:[{title:"Baby Trivia Relay – Score Card",lines:["Team Name | Rounds Won","__________|___________","__________|___________","__________|___________","__________|___________","Final Winner: _______________"]}]},
+  {id:33,name:"Dirty Diaper Bingo",cat:"Classic",desc:"Bingo using diaper change scenarios",players:"Any",time:"30 min",materials:"Bingo cards, markers",instructions:"Create bingo cards with diaper-related scenarios instead of numbers. Host reads scenarios aloud (drawn from a bag). First to get five in a row wins.",template:[{title:"Dirty Diaper Bingo Card",lines:["Blowout | 3 AM Change | Double Wipe | FREE | Squirmy Baby","Diaper Rash | Wrong Size | Leaky Seal | Air Time | One Wipe","New Diaper Wet Immediately | LEFT | CENTER | RIGHT | Quick Change","Used All Wipes | Forgot the Bag | Smell Alert | Floor Disaster | Poop Art","First Time Dad | Grandma's Turn | Wrong Way | Racing Baby | Dry & Happy"]}]},
+  {id:34,name:"Photo Booth Fun",cat:"Active",desc:"Silly photo station with baby-themed props",players:"Any",time:"Throughout party",materials:"Photo props (pacifiers, baby hats, signs), backdrop or camera",instructions:"Set up a photo booth corner with fun props. Provide a Polaroid or instant camera, or set up a phone on a tripod. Guests take photos and write captions to put in mama's memory book.",template:[{title:"Photo Booth Caption Card",lines:["Photo taken by: _______________","Caption: _______________________________________________","_______________________________________________","Date: _______________  |  Party: ___(mama's name)___'s Baby Shower"]}]},
+  {id:35,name:"Name That Baby Animal",cat:"Trivia",desc:"Name the baby version of different animals",players:"Any",time:"15 min",materials:"Quiz sheets, pens",instructions:"List 15–20 animals and ask guests to name their babies. Fastest / most correct wins.",template:[{title:"Baby Animal Name Quiz",lines:["Cat → ___  |  Dog → ___  |  Cow → ___","Horse → ___  |  Pig → ___  |  Duck → ___","Goat → ___  |  Bear → ___  |  Kangaroo → ___","Deer → ___  |  Eagle → ___  |  Frog → ___","Shark → ___  |  Elephant → ___  |  Penguin → ___","Fox → ___  |  Owl → ___  |  Jellyfish → ___"]}]},
+  {id:36,name:"Pack the Diaper Bag",cat:"Active",desc:"Race to correctly pack a diaper bag",players:"2–6",time:"15 min",materials:"Empty diaper bags, baby items spread on a table",instructions:"Spread 15 baby items on a table. Players race to pack their diaper bag with what they'd take on an outing. Judge by speed AND correctness. Crowd votes on best packer!",template:[{title:"Diaper Bag Essentials Checklist",lines:["☐ Diapers (enough for the outing)","☐ Wipes","☐ Change of clothes","☐ Changing mat","☐ Diaper cream","☐ Feeding supplies (bottles/nursing cover)","☐ Burp cloth","☐ Pacifier","☐ Toy / teether","☐ Snacks (age appropriate)","☐ First aid basics","☐ Hand sanitizer"]}]},
+  {id:37,name:"Baby Shower Crossword",cat:"Classic",desc:"Complete a crossword with baby-themed clues",players:"Any",time:"20 min",materials:"Printed crossword sheets, pens",instructions:"Distribute custom crossword puzzles with baby-related clues. Set a time limit. Most correct answers (or first to finish) wins.",template:[{title:"Baby Shower Crossword – Sample Clues",lines:["ACROSS:","1. Where baby sleeps (4) = CRIB","5. Keeps baby's bottom clean (6) = DIAPER","8. Sound baby makes first (3) = COO","11. Feeding vessel (6) = BOTTLE","DOWN:","2. Calms a fussy baby (9) = PACIFIER","3. Baby's first food (4,4) = BABY FOOD","6. Milestone at 6–10 months (7) = CRAWLING","9. Mama's sleepless shift (9) = NIGHTTIME"]}]},
+  {id:38,name:"Who Knows Mama Best?",cat:"Trivia",desc:"Guests answer questions about the mom-to-be",players:"Any",time:"20 min",materials:"Pre-answered questionnaire from mama, guest answer sheets",instructions:"Before the shower, ask mama to answer 15 questions about herself. At the shower, guests answer the same questions. Whoever matches mama's answers the most wins!",template:[{title:"Who Knows Mama Best? – Guest Sheet",lines:["1. Mama's middle name: _______________","2. How old was she when she found out she was pregnant? ___","3. First thing she craved during pregnancy: _______________","4. Her favorite baby name she didn't choose: _______________","5. The nursery color scheme: _______________","6. Her biggest pregnancy craving: _______________","7. Her birth plan preference: _______________","8. What she's most nervous about: _______________","9. Her ideal postpartum helper: _______________","10. What she hopes baby's first word will be: _______________"]}]},
+  {id:39,name:"Finish the Phrase: Mama Said",cat:"Icebreaker",desc:"Guests complete famous mom sayings",players:"Any",time:"15 min",materials:"Printed sheets, pens",instructions:"Print incomplete 'mom phrases' and have guests finish them. Read aloud for laughs. No winner needed — it's pure fun!",template:[{title:"Finish the Phrase – Mama Said",lines:["'Because I said _______________'","'Just wait until your father _______________'","'Money doesn't grow on _______________'","'I'm not your _______________'","'If all your friends jumped off a _______________'","'Eat your _______________'","'Don't make me count to _______________'","'This is going to hurt me more than _______________'","'In my day, we didn't have _______________'","'What did I just _______________?'"]}]},
+  {id:40,name:"Baby Shower Auction",cat:"Active",desc:"Bid fake money on baby items or privileges",players:"Any",time:"30 min",materials:"Play money (distributed at start), items to bid on",instructions:"Give each guest equal 'baby bucks' at arrival. Auction off prizes (real baby items, experience vouchers, etc.). Highest bidder wins each. Fun twist: include silly items like 'Exempt from playing next game.'",template:[{title:"Baby Shower Auction – Bidding Card",lines:["Bidder Name: _______________","Starting Baby Bucks: $500","","Item | Bid Amount | Won? (Y/N)","_____|___________|__________","_____|___________|__________","_____|___________|__________","_____|___________|__________","Final Baby Bucks Remaining: $___"]}]},
+  {id:41,name:"Don't Cross Your Legs",cat:"Icebreaker",desc:"Variation of Don't Say Baby – catching crossed legs",players:"Any",time:"Whole party",materials:"Safety pins or clothespins",instructions:"Each guest wears a pin. If someone catches you crossing your legs, they take your pin. The guest with the most pins at the end wins. Great paired with Don't Say Baby!",template:[{title:"Don't Cross Your Legs – Rules Card",lines:["Rule: Do NOT cross your legs at any point during the shower!","If caught crossing your legs: that guest takes your pin.","Collect the most pins to WIN the prize!","Prize: _______________"]}]},
+  {id:42,name:"Baby Animal Match",cat:"Trivia",desc:"Match adult animals to their young",players:"Any",time:"15 min",materials:"Match sheets, pens",instructions:"Create two columns — adult animals and their baby names shuffled. Guests draw lines to match. Most correct wins. Include tricky ones like 'leveret' (baby hare) and 'elver' (baby eel).",template:[{title:"Baby Animal Match Card",lines:["Draw a line to match:","ADULT → BABY NAME","Horse   |  Foal","Cow     |  Calf","Deer    |  Fawn","Bear    |  Cub","Hare    |  Leveret","Eel     |  Elver","Swan    |  Cygnet","Pig     |  Piglet","Shark   |  Pup","Kangaroo| Joey"]}]},
+  {id:43,name:"Guess Daddy's Reaction",cat:"Guessing",desc:"Predict how dad-to-be will react to baby scenarios",players:"Any",time:"20 min",materials:"Pre-filmed video of dad's reactions, answer sheets",instructions:"Before the shower, film dad reacting to 10 scenarios (first diaper, baby crying in public, etc.). Guests predict his reactions. Compare with the video. Funniest game of the shower!",template:[{title:"Guess Daddy's Reaction – Sheet",lines:["Scenario 1 – First diaper change: Dad will... _______________","Scenario 2 – Baby won't stop crying: Dad will... _______________","Scenario 3 – Blowout at a restaurant: Dad will... _______________","Scenario 4 – Baby's first smile: Dad will... _______________","Scenario 5 – 3 AM feeding: Dad will... _______________","Scenario 6 – Baby's first word: Dad will... _______________","Scenario 7 – First day of school: Dad will... _______________"]}]},
+  {id:44,name:"Baby Bucket List",cat:"Creative",desc:"Write dream experiences for baby's life",players:"Any",time:"Throughout party",materials:"Bucket list cards, pens, decorative box",instructions:"Each guest writes 3–5 things they hope baby experiences in life. Cards go into a 'Time Capsule' box for mama to keep.",template:[{title:"Baby Bucket List Card",lines:["Dear Baby,","","Things I hope you experience in life:","1. _______________________________________________","2. _______________________________________________","3. _______________________________________________","4. _______________________________________________","5. _______________________________________________","","With love and hope, _______________"]}]},
+  {id:45,name:"The Price is Right: Diaper Edition",cat:"Guessing",desc:"Guess how many diapers baby will use in first year",players:"Any",time:"10 min",materials:"Answer slips, prize",instructions:"Ask guests to write down how many diapers a baby typically uses in the first year. Closest to the actual answer (approximately 2,500–3,000) wins.",template:[{title:"Diaper Math Guess Slip",lines:["How many diapers does a baby use in their FIRST YEAR?","","My guess: ___________ diapers","","Guest name: _______________","","(Hint: It's more than you think! 😄)"]}]},
+  {id:46,name:"Memory Chain",cat:"Icebreaker",desc:"Build a chain of baby-related words around the circle",players:"6–20",time:"15 min",materials:"None",instructions:"Sit in a circle. The first player says a baby-related word (e.g., 'diaper'). Next player must repeat all previous words and add one. Anyone who forgets the chain is out. Last player standing wins.",template:[{title:"Memory Chain – Sample Starting Words",lines:["Round 1 starter: DIAPER","Round 2 starter: STROLLER","Round 3 starter: RATTLE","Round 4 starter: LULLABY","Round 5 starter: ONESIE","","Rules: Say all previous words in order, then add yours.","Forget one = you're out!"]}]},
+  {id:47,name:"Best Kids' Movie Trivia",cat:"Trivia",desc:"Answer questions about popular children's films",players:"Any",time:"20 min",materials:"Trivia sheets, pens",instructions:"Test guests' knowledge of beloved children's movies. Questions about plot, characters, songs, and fun facts. Most correct answers wins.",template:[{title:"Kids' Movie Trivia – Question Sheet",lines:["1. What is Simba's father's name in The Lion King? ___","2. Who voices Buzz Lightyear? ___","3. What is the name of the clownfish's son in Finding Nemo? ___","4. In Frozen, what is Elsa's kingdom called? ___","5. What is the name of the toy store in Toy Story 2? ___","6. What does WALL-E stand for? ___","7. Who is Moana's grandmother? ___","8. What breed is Lady in Lady and the Tramp? ___","9. In Shrek, who voices Princess Fiona? ___","10. What is the name of Sleeping Beauty? ___"]}]},
+  {id:48,name:"Painted Rock Keepsakes",cat:"Creative",desc:"Guests paint rocks to decorate baby's nursery",players:"Any",time:"Throughout party",materials:"Smooth rocks, acrylic paints, sealant spray",instructions:"Set up a painting station with smooth rocks and paints. Guests paint inspirational words, animals, patterns, or messages on rocks. Seal and present to mama as nursery décor.",template:[{title:"Painted Rock Station – Instructions",lines:["1. Choose a smooth rock from the basket","2. Paint your design — words, animals, or patterns!","3. Sign your name on the back","4. Let dry fully (approx. 30 minutes)","5. Place in the display basket for mama","Ideas: LOVE · DREAM · BRAVE · a tiny animal · rainbow · stars"]}]},
+  {id:49,name:"Baby Shower Kahoot-Style Quiz",cat:"Trivia",desc:"Live phone-based trivia quiz using a free app",players:"Any",time:"20 min",materials:"Host's device for display, guests' smartphones",instructions:"Use a free quiz app (Kahoot, Mentimeter, or QuizWhizzer). Create a baby-themed quiz beforehand. Guests join on their phones and compete in real-time. Top scorer wins!",template:[{title:"Kahoot Quiz – Sample Questions",lines:["Q1: How long is a full-term pregnancy? A) 36 weeks B) 40 weeks C) 42 weeks","Q2: What is the soft spot called? A) Fontanelle B) Suture C) Cranium","Q3: Average newborn weight? A) 5 lbs B) 7.5 lbs C) 9 lbs","Q4: When do babies roll over? A) 2 months B) 4–6 months C) 8 months","Q5: Baby's first sense to develop? A) Sight B) Touch C) Hearing","Code for quiz: ___________  |  Game PIN: ___________"]}]},
+  {id:50,name:"Letter to Baby",cat:"Creative",desc:"Each guest writes a personal letter to the unborn baby",players:"Any",time:"Throughout party",materials:"Letter templates, envelopes, pens, wax seals optional",instructions:"Give each guest a letter template and envelope. They write a personal letter to the baby — hopes, dreams, advice, a memory they hope to share. Mama collects all letters to read on baby's 18th birthday.",template:[{title:"Letter to Baby Template",lines:["Dear Baby _______________,","","The day you were born, the world gained something beautiful.","","I am writing this before I've met you, but I already know...","_______________________________________________","_______________________________________________","","My wish for your life is:","_______________________________________________","_______________________________________________","","A memory I hope we'll share someday:","_______________________________________________","","I love you already.","","With all my heart, _______________","Date: _______________"]}]},
+];
+
+// ══════════════════════════════════════════
+//  GAMES RENDERING
+// ══════════════════════════════════════════
+function renderGames(list){
+  const grid=document.getElementById('games-grid');
+  grid.innerHTML=list.map(g=>`
+    <div class="game-card ${selectedGames.includes(g.id)?'selected':''}" id="gc-${g.id}">
+      <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:6px">
+        <span class="badge ${catColor(g.cat)}">${g.cat}</span>
+        <input type="checkbox" ${selectedGames.includes(g.id)?'checked':''} onchange="toggleGame(${g.id},this)" onclick="event.stopPropagation()" title="Select for event" style="width:16px;height:16px;accent-color:var(--sage-dark)">
+      </div>
+      <h4 onclick="openGameModal(${g.id})" style="cursor:pointer;color:var(--navy);text-decoration:underline dotted">${g.name}</h4>
+      <p>${g.desc}</p>
+      <div class="game-tags">
+        <span class="tag" style="background:var(--cream);color:var(--muted);font-size:10px">👥 ${g.players}</span>
+        <span class="tag" style="background:var(--cream);color:var(--muted);font-size:10px">⏱️ ${g.time}</span>
+      </div>
+    </div>`).join('');
+}
+function catColor(cat){
+  return{Classic:'badge-gold',Active:'badge-green',Creative:'badge-muted',Trivia:'badge-gold',Guessing:'badge-red',Icebreaker:'badge-green'}[cat]||'badge-muted';
+}
+function filterGames(){
+  const q=document.getElementById('game-search').value.toLowerCase();
+  const cf=document.getElementById('game-cat-filter').value;
+  renderGames(GAMES.filter(g=>(q===''||g.name.toLowerCase().includes(q)||g.desc.toLowerCase().includes(q))&&(cf===''||g.cat===cf)));
+}
+function toggleGame(id,cb){
+  if(cb.checked){if(!selectedGames.includes(id))selectedGames.push(id);}
+  else selectedGames=selectedGames.filter(i=>i!==id);
+  document.getElementById('gc-'+id).classList.toggle('selected',cb.checked);
+  document.getElementById('selected-count').textContent=selectedGames.length;
+  saveLocal();
+}
+function clearSelectedGames(){selectedGames=[];renderGames(GAMES);document.getElementById('selected-count').textContent=0;saveLocal();}
+function printSelectedGames(){
+  const sel=GAMES.filter(g=>selectedGames.includes(g.id));
+  if(sel.length===0){alert('Please select at least one game first.');return;}
+  const win=window.open('','_blank');
+  win.document.write(`<!DOCTYPE html><html><head><title>Baby Shower Game Packets</title>
+  <style>body{font-family:Georgia,serif;padding:30px;color:#333}h1{font-size:24px;color:#2C3E6B;margin-bottom:4px}.game{page-break-after:always;padding:20px 0}h2{font-size:20px;color:#C9A84C;border-bottom:2px solid #F2C4CE;padding-bottom:8px}h3{font-size:14px;text-transform:uppercase;letter-spacing:.5px;color:#E8A0B0;margin:16px 0 8px}.line{border-bottom:1px solid #F2C4CE;min-height:26px;margin:6px 0}p,li{font-size:13px;line-height:1.7}ul,ol{padding-left:18px}</style>
+  </head><body><h1>🌸 Baby Shower Game Packets</h1><p style="color:#888;font-size:12px">Print this packet for your selected games.</p>`);
+  sel.forEach(g=>{
+    win.document.write(`<div class="game"><h2>${g.name}</h2><p><strong>Category:</strong> ${g.cat} &nbsp;|&nbsp; <strong>Players:</strong> ${g.players} &nbsp;|&nbsp; <strong>Time:</strong> ${g.time}</p><p><strong>Materials:</strong> ${g.materials}</p><h3>Instructions</h3><p>${g.instructions}</p>`);
+    g.template.forEach(t=>{
+      win.document.write(`<h3>${t.title}</h3>`);
+      if(g.bingo){
+        win.document.write(buildBingoGridHTML(t.squares,true));
+      } else {
+        win.document.write(t.lines.map(l=>`<div class="line">${l}</div>`).join(''));
+      }
+    });
+    win.document.write('</div>');
+  });
+  win.document.write('</body></html>');
+  win.document.close();
+  win.print();
+}
+// ── Bingo grid HTML builder ──
+function buildBingoGridHTML(squares,forPrint){
+  const cols=['B','I','N','G','O'];
+  const cellSize=forPrint?'72px':'68px';
+  const fontSize=forPrint?'11px':'10px';
+  const headerSize=forPrint?'18px':'16px';
+  let html=`<table style="border-collapse:collapse;margin:0 auto;width:${forPrint?'380px':'360px'}">`;
+  // Header row
+  html+='<tr>';
+  cols.forEach(c=>{
+    html+=`<th style="width:${cellSize};height:${forPrint?'36px':'32px'};text-align:center;font-family:Georgia,serif;font-size:${headerSize};font-weight:700;color:#2C3E6B;background:linear-gradient(135deg,#F2C4CE,#FAE8EC);border:2px solid #E8A0B0;letter-spacing:2px">${c}</th>`;
+  });
+  html+='</tr>';
+  // 5×5 grid
+  for(let row=0;row<5;row++){
+    html+='<tr>';
+    for(let col=0;col<5;col++){
+      const idx=row*5+col;
+      const text=squares[idx]||'';
+      const isFree=text.includes('FREE');
+      const bg=isFree?'linear-gradient(135deg,#A8C5A0,#D8EDD4)':'#FFFFFF';
+      const color=isFree?'#3a6e35':'#3A3A3A';
+      const weight=isFree?'700':'400';
+      html+=`<td style="width:${cellSize};height:${cellSize};border:2px solid #E8A0B0;text-align:center;vertical-align:middle;font-family:Georgia,serif;font-size:${fontSize};color:${color};background:${bg};font-weight:${weight};padding:4px;line-height:1.3;white-space:pre-line">${text}</td>`;
+    }
+    html+='</tr>';
+  }
+  html+='</table>';
+  return html;
+}
+
+function openGameModal(id){
+  const g=GAMES.find(g=>g.id===id);if(!g)return;
+  document.getElementById('modal-category').textContent=g.cat+' Game';
+  document.getElementById('modal-title').textContent=g.name;
+
+  const templateHTML=g.template.map(t=>{
+    const previewContent=g.bingo
+      ? buildBingoGridHTML(t.squares,false)
+      : `<div style="text-align:center;font-family:Georgia,serif;font-size:16px;font-weight:bold;color:#2C3E6B;margin-bottom:12px">✿ ${t.title} ✿</div>
+         ${t.lines.map(l=>l.includes('=')||l.includes('|')||l.includes('→')||l.startsWith('Q')||l.startsWith('•')||l.startsWith('☐')
+           ?`<div style="font-size:12px;padding:4px 0;color:#444">${l}</div>`
+           :`<div class="print-line" style="font-size:12px;color:#888">${l}</div>`).join('')}`;
+    return `
+    <div class="game-section">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <h4>📄 Printable: ${t.title}</h4>
+        <button class="btn btn-primary btn-sm print-btn" onclick="printTemplate(${id},'${t.title.replace(/'/g,"\\'")}')">🖨️ Print</button>
+      </div>
+      <div class="printable-template" style="${g.bingo?'overflow-x:auto;':''}">
+        ${previewContent}
+      </div>
+    </div>`;
+  }).join('<hr class="divider">');
+
+  document.getElementById('modal-body').innerHTML=`
+    <div class="game-section">
+      <h4>Overview</h4>
+      <p>${g.desc} · <strong>Players:</strong> ${g.players} · <strong>Time:</strong> ${g.time}</p>
+      <p style="margin-top:6px"><strong>Materials needed:</strong> ${g.materials}</p>
+    </div>
+    <hr class="divider">
+    <div class="game-section">
+      <h4>Instructions</h4>
+      <p>${g.instructions}</p>
+    </div>
+    <hr class="divider">
+    ${templateHTML}
+    <div class="flex-end" style="margin-top:16px">
+      <button class="btn btn-ghost" onclick="closeGameModal()">Close</button>
+      <button class="btn btn-${selectedGames.includes(id)?'danger':'primary'}" onclick="toggleGameFromModal(${id},this)">
+        ${selectedGames.includes(id)?'✕ Remove from Event':'✓ Add to My Event'}
+      </button>
+    </div>`;
+  document.getElementById('game-modal').style.display='flex';
+}
+function toggleGameFromModal(id,btn){
+  if(selectedGames.includes(id)){
+    selectedGames=selectedGames.filter(i=>i!==id);
+    btn.className='btn btn-primary';btn.textContent='✓ Add to My Event';
+  }else{
+    selectedGames.push(id);
+    btn.className='btn btn-danger';btn.textContent='✕ Remove from Event';
+  }
+  const cb=document.getElementById('gc-'+id);
+  if(cb){cb.classList.toggle('selected',selectedGames.includes(id));const inp=cb.querySelector('input[type=checkbox]');if(inp)inp.checked=selectedGames.includes(id);}
+  document.getElementById('selected-count').textContent=selectedGames.length;
+  saveLocal();
+}
+function closeGameModal(e){
+  if(!e||e.target===document.getElementById('game-modal'))
+    document.getElementById('game-modal').style.display='none';
+}
+function printTemplate(gameId,title){
+  const g=GAMES.find(g=>g.id===gameId);
+  const t=g.template.find(t=>t.title===title)||g.template[0];
+  const win=window.open('','_blank');
+
+  if(g.bingo){
+    const gridHTML=buildBingoGridHTML(t.squares,true);
+    win.document.write(`<!DOCTYPE html><html><head><title>${t.title}</title>
+    <style>
+      body{font-family:Georgia,serif;padding:30px;max-width:500px;margin:0 auto;background:#FDF6EE}
+      h1{font-size:22px;text-align:center;color:#2C3E6B;margin-bottom:4px;letter-spacing:1px}
+      p{text-align:center;font-size:12px;color:#aaa;margin-bottom:18px}
+      @media print{button{display:none}body{padding:10px}}
+    </style></head>
+    <body>
+      <h1>🌸 Baby Shower Bingo 🌸</h1>
+      <p>Mark off each item as it is opened. Five in a row wins!</p>
+      ${gridHTML}
+      <p style="margin-top:18px;font-size:10px;color:#ccc">✿ Created with Baby Shower Planner ✿</p>
+    </body></html>`);
+  } else {
+    win.document.write(`<!DOCTYPE html><html><head><title>${t.title}</title>
+    <style>body{font-family:Georgia,serif;padding:40px;max-width:600px;margin:0 auto}h1{font-size:20px;text-align:center;color:#2C3E6B;border-bottom:2px solid #F2C4CE;padding-bottom:12px;margin-bottom:20px}.line{border-bottom:1px solid #F2C4CE;min-height:28px;margin:8px 0;font-size:13px;color:#888;padding:2px 0}p{font-size:13px;color:#444;line-height:1.7}@media print{button{display:none}}</style></head>
+    <body><h1>✿ ${t.title} ✿</h1><p style="text-align:center;font-size:12px;color:#aaa">${g.name} · Baby Shower Game</p>`);
+    t.lines.forEach(l=>win.document.write(`<div class="line">${l}</div>`));
+    win.document.write('<p style="text-align:center;margin-top:30px;font-size:10px;color:#ccc">✿ Created with Baby Shower Planner ✿</p></body></html>');
+  }
+  win.document.close();win.print();
+}
+
+// ══════════════════════════════════════════
+//  GUEST IMPORT (CSV / XLSX)
+// ══════════════════════════════════════════
+let pendingImportRows=[];
+
+function downloadGuestTemplate(){
+  const csv='Name,Email,Phone,Status,Guests\nJane Smith,jane@example.com,555-123-4567,Pending,2\nJohn Doe,john@example.com,555-987-6543,Yes,1';
+  const blob=new Blob([csv],{type:'text/csv'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='guest_list_template.csv';a.click();
+}
+
+function importGuestFile(input){
+  const file=input.files[0];if(!file)return;
+  document.getElementById('csv-filename').textContent=file.name;
+  const ext=file.name.split('.').pop().toLowerCase();
+  if(ext==='csv'){
+    const reader=new FileReader();
+    reader.onload=e=>parseCSV(e.target.result);
+    reader.readAsText(file);
+  }else if(ext==='xlsx'||ext==='xls'){
+    const reader=new FileReader();
+    reader.onload=e=>parseXLSX(e.target.result);
+    reader.readAsArrayBuffer(file);
+  }else{
+    alert('Please upload a .csv or .xlsx file.');
+  }
+  input.value='';
+}
+
+function parseCSV(text){
+  const lines=text.trim().split(/\r?\n/);
+  if(lines.length<2){alert('File appears empty or has no data rows.');return;}
+  const headers=lines[0].split(',').map(h=>h.trim().toLowerCase());
+  const rows=[];
+  for(let i=1;i<lines.length;i++){
+    if(!lines[i].trim())continue;
+    // Handle quoted fields
+    const cols=lines[i].match(/(".*?"|[^,]+|(?<=,)(?=,)|(?<=,)$|^(?=,))/g)||lines[i].split(',');
+    const clean=cols.map(c=>c.replace(/^"|"$/g,'').trim());
+    rows.push(mapRow(headers,clean));
+  }
+  showImportPreview(rows);
+}
+
+function parseXLSX(buffer){
+  // Dynamically load SheetJS
+  if(window.XLSX){doParseXLSX(buffer);return;}
+  const script=document.createElement('script');
+  script.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+  script.onload=()=>doParseXLSX(buffer);
+  script.onerror=()=>alert('Could not load Excel parser. Please try a CSV file instead.');
+  document.head.appendChild(script);
+}
+
+function doParseXLSX(buffer){
+  try{
+    const wb=XLSX.read(buffer,{type:'array'});
+    const ws=wb.Sheets[wb.SheetNames[0]];
+    const data=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
+    if(data.length<2){alert('Sheet appears empty.');return;}
+    const headers=data[0].map(h=>String(h).trim().toLowerCase());
+    const rows=data.slice(1).filter(r=>r.some(c=>String(c).trim())).map(r=>mapRow(headers,r.map(c=>String(c).trim())));
+    showImportPreview(rows);
+  }catch(e){alert('Could not parse Excel file. Please try saving as CSV.');}
+}
+
+function mapRow(headers,cols){
+  const get=(...keys)=>{
+    for(const k of keys){const i=headers.indexOf(k);if(i>=0)return(cols[i]||'').trim();}
+    return'';
+  };
+  const name=get('name','full name','guest name','guest');
+  const email=get('email','e-mail','email address');
+  const phone=get('phone','phone number','mobile','cell','telephone');
+  const rawStatus=get('status','rsvp','rsvp status');
+  const count=parseInt(get('guests','# guests','guest count','count','number of guests'))||1;
+  const validStatuses=['yes','no','pending'];
+  const status=validStatuses.includes(rawStatus.toLowerCase())
+    ?rawStatus.charAt(0).toUpperCase()+rawStatus.slice(1).toLowerCase()
+    :'Pending';
+  let issue='';
+  if(!name)issue='Missing name';
+  else if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))issue='Invalid email';
+  return{name,email,phone,status,count,issue};
+}
+
+function showImportPreview(rows){
+  pendingImportRows=rows;
+  const valid=rows.filter(r=>!r.issue);
+  const invalid=rows.filter(r=>r.issue);
+  document.getElementById('import-summary').innerHTML=
+    `Found <strong>${rows.length}</strong> rows &nbsp;·&nbsp; `+
+    `<span style="color:var(--sage-dark)">✓ ${valid.length} valid</span>`+
+    (invalid.length?` &nbsp;·&nbsp; <span style="color:#C0392B">⚠ ${invalid.length} with issues</span>`:'');
+  document.getElementById('import-tbody').innerHTML=rows.map((r,i)=>`
+    <tr style="${r.issue?'background:#fff8f8':''}">
+      <td>${r.name||'<em style="color:#aaa">—</em>'}</td>
+      <td>${r.email||'—'}</td>
+      <td>${r.phone||'—'}</td>
+      <td><span class="badge ${r.status==='Yes'?'badge-green':r.status==='No'?'badge-red':'badge-muted'}">${r.status}</span></td>
+      <td>${r.count}</td>
+      <td style="color:#C0392B;font-size:12px">${r.issue||'<span style="color:var(--sage-dark)">✓</span>'}</td>
+    </tr>`).join('');
+  document.getElementById('import-confirm-btn').textContent=`✓ Import ${valid.length} Valid Row${valid.length!==1?'s':''}`;
+  document.getElementById('import-preview').style.display='block';
+}
+
+function confirmImport(){
+  const valid=pendingImportRows.filter(r=>!r.issue&&r.name);
+  let added=0;
+  valid.forEach(r=>{
+    // Skip duplicates by name+email
+    const dup=guests.find(g=>g.name.toLowerCase()===r.name.toLowerCase()&&(g.email===r.email||(!g.email&&!r.email)));
+    if(!dup){guests.push({id:Date.now()+Math.random(),name:r.name,email:r.email,phone:r.phone,status:r.status,count:r.count});added++;}
+  });
+  saveLocal();renderGuests();
+  cancelImport();
+  alert(`✓ Successfully imported ${added} guest${added!==1?'s':''}${valid.length-added>0?` (${valid.length-added} duplicate${valid.length-added!==1?'s':''} skipped)`:''}.`);
+}
+
+function cancelImport(){
+  document.getElementById('import-preview').style.display='none';
+  document.getElementById('csv-filename').textContent='No file chosen';
+  pendingImportRows=[];
+}
+
+// ══════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════
+window.addEventListener('DOMContentLoaded',()=>{
+  loadLocal();
+  renderBudget();
+  renderGuests();
+  renderMenu();
+  initChecklist();
+  renderGames(GAMES);
+  restoreFurniture();
+  document.getElementById('selected-count').textContent=selectedGames.length;
+  const budget=localStorage.getItem('bsp_totalBudget');
+  if(budget){document.getElementById('totalBudget').value=budget;}
+  document.getElementById('totalBudget').addEventListener('input',()=>{localStorage.setItem('bsp_totalBudget',document.getElementById('totalBudget').value);});
+});
+</script>
+</body>
+</html>
