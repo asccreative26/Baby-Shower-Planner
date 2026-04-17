@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -122,8 +123,11 @@ input:focus,select:focus,textarea:focus{border-color:var(--gold)}
 .theme-swatch .swatch-label{font-size:11px;text-align:center;padding:6px;font-weight:600;color:var(--navy);background:white}
 .room-layout{background:var(--cream);border:2px dashed var(--blush);border-radius:var(--radius);min-height:300px;position:relative;overflow:hidden}
 .room-layout-canvas{width:100%;min-height:300px;background:repeating-linear-gradient(0deg,transparent,transparent 29px,rgba(242,196,206,.2) 29px,rgba(242,196,206,.2) 30px),repeating-linear-gradient(90deg,transparent,transparent 29px,rgba(242,196,206,.2) 29px,rgba(242,196,206,.2) 30px)}
-.furniture-item{position:absolute;background:var(--blush-light);border:2px solid var(--blush-deep);border-radius:6px;cursor:move;user-select:none;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--navy);text-align:center;padding:4px;transition:box-shadow .2s}
+.furniture-item{position:absolute;background:var(--blush-light);border:2px solid var(--blush-deep);border-radius:6px;cursor:grab;user-select:none;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--navy);text-align:center;padding:6px;transition:box-shadow .2s;box-sizing:border-box;overflow:visible}
 .furniture-item:hover,.furniture-item.dragging{box-shadow:0 4px 16px rgba(44,62,107,.2);border-color:var(--gold)}
+.furniture-item.dragging{cursor:grabbing}
+.furniture-delete{position:absolute;top:-9px;right:-9px;width:20px;height:20px;border-radius:50%;background:#C0392B;color:white;font-size:12px;font-weight:bold;line-height:20px;text-align:center;cursor:pointer;z-index:20;box-shadow:0 1px 5px rgba(0,0,0,.3);display:none;border:2px solid white;padding:0;font-family:Arial,sans-serif}
+.furniture-item:hover .furniture-delete{display:block}
 .furniture-palette{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
 .furniture-btn{padding:8px 14px;background:var(--white);border:1px solid var(--blush);border-radius:var(--radius-sm);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;display:flex;align-items:center;gap:4px}
 .furniture-btn:hover{background:var(--blush-light);border-color:var(--blush-deep)}
@@ -304,7 +308,7 @@ textarea{resize:vertical;min-height:80px}
 
   <div class="card">
     <div class="card-title"><span class="icon">📥</span> Bulk Import from CSV / Excel</div>
-    <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Upload a <strong>.csv</strong> or <strong>.xlsx</strong> file with columns: <code style="background:var(--cream);padding:2px 6px;border-radius:4px;font-size:12px">Name, Email, Phone, Status, Guests</code> (header row required). Status values: <em>Yes, No, Pending</em>.</p>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Upload a <strong>.csv</strong> or <strong>.xlsx</strong> file with columns: <code style="background:var(--cream);padding:2px 6px;border-radius:4px;font-size:12px">Name, Email, Status, Guests</code> (header row required). Status values: <em>Yes, No, Pending</em>.</p>
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
       <button class="btn btn-primary" onclick="document.getElementById('csv-upload').click()">📂 Choose File</button>
       <span id="csv-filename" style="font-size:13px;color:var(--muted)">No file chosen</span>
@@ -315,7 +319,7 @@ textarea{resize:vertical;min-height:80px}
       <div style="font-size:13px;font-weight:600;color:var(--navy);margin-bottom:8px" id="import-summary"></div>
       <div style="overflow-x:auto;max-height:220px;overflow-y:auto;border:1px solid var(--blush);border-radius:var(--radius-sm)">
         <table id="import-table">
-          <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Status</th><th>Guests</th><th>Issue</th></tr></thead>
+          <thead><tr><th>Name</th><th>Email</th><th>Status</th><th>Guests</th><th>Issue</th></tr></thead>
           <tbody id="import-tbody"></tbody>
         </table>
       </div>
@@ -331,7 +335,6 @@ textarea{resize:vertical;min-height:80px}
     <div class="form-row">
       <div class="form-group"><label>Full Name</label><input type="text" id="g-name" placeholder="Guest name"></div>
       <div class="form-group"><label>Email</label><input type="email" id="g-email" placeholder="email@example.com"></div>
-      <div class="form-group"><label>Phone</label><input type="tel" id="g-phone" placeholder="+1 (555) 000-0000"></div>
       <div class="form-group"><label>RSVP Status</label>
         <select id="g-status"><option value="Pending">Pending</option><option value="Yes">Attending ✓</option><option value="No">Declined ✗</option></select>
       </div>
@@ -350,7 +353,6 @@ textarea{resize:vertical;min-height:80px}
         <option value="No">Declined Only</option>
       </select>
       <button class="btn btn-green btn-sm" onclick="bulkEmail()">📧 Email Selected</button>
-      <button class="btn btn-primary btn-sm" onclick="bulkSMS()">💬 Text Selected</button>
     </div>
     <div class="form-group" style="margin-bottom:8px">
       <label>Message Template</label>
@@ -372,7 +374,7 @@ textarea{resize:vertical;min-height:80px}
     </div>
     <div style="overflow-x:auto">
       <table>
-        <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Status</th><th>Guests</th><th>Actions</th></tr></thead>
+        <thead><tr><th>Name</th><th>Email</th><th>Status</th><th>Guests</th><th>Actions</th></tr></thead>
         <tbody id="guest-tbody"></tbody>
       </table>
     </div>
@@ -507,12 +509,12 @@ textarea{resize:vertical;min-height:80px}
       <button class="furniture-btn" onclick="addFurniture('🎮 Game Area',150,120)">🎮 Game Area</button>
       <button class="furniture-btn" onclick="addFurniture('📸 Photo Booth',130,100)">📸 Photo Booth</button>
       <button class="furniture-btn" onclick="addFurniture('🚪 Door',60,20)">🚪 Door</button>
-      <button class="furniture-btn" onclick="clearLayout()" style="background:#fee;border-color:#fcc;color:#C0392B">🗑️ Clear</button>
+      <button class="furniture-btn" onclick="clearLayout()" style="background:#fee;border-color:#fcc;color:#C0392B">🗑️ Clear All</button>
     </div>
     <div class="room-layout">
       <div class="room-layout-canvas" id="room-canvas"></div>
     </div>
-    <p style="font-size:11px;color:var(--muted);margin-top:8px">💡 Tip: Drag items to reposition. Double-click to rename.</p>
+    <p style="font-size:11px;color:var(--muted);margin-top:8px">💡 Tip: Drag items to reposition. Double-click to rename. Hover over an item and click ✕ to remove it.</p>
   </div>
 </div>
 
@@ -708,8 +710,8 @@ function renderBudget(){
 function addGuest(){
   const name=document.getElementById('g-name').value.trim();
   if(!name){alert('Please enter a name');return;}
-  guests.push({id:Date.now(),name,email:document.getElementById('g-email').value,phone:document.getElementById('g-phone').value,status:document.getElementById('g-status').value,count:parseInt(document.getElementById('g-guests').value)||1});
-  ['g-name','g-email','g-phone'].forEach(id=>document.getElementById(id).value='');
+  guests.push({id:Date.now(),name,email:document.getElementById('g-email').value,status:document.getElementById('g-status').value,count:parseInt(document.getElementById('g-guests').value)||1});
+  ['g-name','g-email'].forEach(id=>document.getElementById(id).value='');
   saveLocal();renderGuests();
 }
 function deleteGuest(id){guests=guests.filter(g=>g.id!==id);saveLocal();renderGuests();}
@@ -730,7 +732,6 @@ function renderGuests(){
     <tr>
       <td><strong>${g.name}</strong></td>
       <td><a href="mailto:${g.email}" style="color:var(--navy)">${g.email||'—'}</a></td>
-      <td>${g.phone||'—'}</td>
       <td><select style="width:auto;font-size:12px" onchange="updateGuestStatus(${g.id},this.value)">
         <option ${g.status==='Pending'?'selected':''}>Pending</option>
         <option ${g.status==='Yes'?'selected':''}>Yes</option>
@@ -739,7 +740,6 @@ function renderGuests(){
       <td>${g.count}</td>
       <td class="msg-btns">
         ${g.email?`<button class="btn btn-sm btn-green" onclick="emailGuest('${g.name}','${g.email}')">📧</button>`:''}
-        ${g.phone?`<button class="btn btn-sm btn-primary" onclick="smsGuest('${g.name}','${g.phone}')">💬</button>`:''}
         <button class="btn btn-sm btn-danger" onclick="deleteGuest(${g.id})">✕</button>
       </td>
     </tr>`).join('');
@@ -751,12 +751,7 @@ function emailGuest(name,email){
   let msg=document.getElementById('msg-template').value.replace('[Name]',name).replace('[Mama]',mama).replace('[Date]',date).replace('[Venue]',venue).replace('[link]','our RSVP link');
   window.location.href=`mailto:${email}?subject=Baby Shower Invitation for ${mama}&body=${encodeURIComponent(msg)}`;
 }
-function smsGuest(name,phone){
-  const mama=document.getElementById('eventName').value||'the mama-to-be';
-  const date=document.getElementById('eventDate').value;
-  let msg=document.getElementById('msg-template').value.replace('[Name]',name).replace('[Mama]',mama).replace('[Date]',date).replace('[Venue]',document.getElementById('eventVenue').value||'the venue').replace('[link]','our link');
-  window.location.href=`sms:${phone}?body=${encodeURIComponent(msg)}`;
-}
+
 function bulkEmail(){
   const filter=document.getElementById('msg-filter').value;
   const filtered=filter==='All'?guests:guests.filter(g=>g.status===filter);
@@ -765,10 +760,7 @@ function bulkEmail(){
   const mama=document.getElementById('eventName').value||'the mama-to-be';
   window.location.href=`mailto:${emails}?subject=Baby Shower Invitation for ${mama}`;
 }
-function bulkSMS(){
-  alert('To send bulk texts, copy the numbers below and use your messaging app:\n\n'+
-    (document.getElementById('msg-filter').value==='All'?guests:guests.filter(g=>g.status===document.getElementById('msg-filter').value)).filter(g=>g.phone).map(g=>g.phone).join(', '));
-}
+
 
 // ══════════════════════════════════════════
 //  MENU
@@ -819,65 +811,137 @@ function selectTheme(el,c1,c2,c3){
   document.getElementById('c3').value=c3;
 }
 
-let dragEl=null,dragOx=0,dragOy=0;
-function addFurniture(label,w,h){
-  const canvas=document.getElementById('room-canvas');
+// ── Furniture drag state ──
+let dragEl=null, dragOx=0, dragOy=0;
+
+function makeFurnitureEl(label,w,h,x,y){
   const el=document.createElement('div');
   el.className='furniture-item';
-  el.style.cssText=`width:${w}px;height:${h}px;left:20px;top:20px`;
-  el.textContent=label;
+  el.style.cssText=`width:${w}px;height:${h}px;left:${x}px;top:${y}px;position:absolute`;
   el.dataset.label=label;
-  el.addEventListener('mousedown',startDrag);
-  el.addEventListener('touchstart',startDragTouch,{passive:true});
-  el.addEventListener('dblclick',()=>{const n=prompt('Rename:',el.dataset.label);if(n){el.textContent=n;el.dataset.label=n;saveFurniture();}});
+
+  // Label span (so the delete btn doesn't replace it)
+  const lbl=document.createElement('span');
+  lbl.className='furniture-label';
+  lbl.textContent=label;
+  el.appendChild(lbl);
+
+  // Delete X button
+  const del=document.createElement('button');
+  del.className='furniture-delete';
+  del.textContent='✕';
+  del.title='Remove this item';
+  del.addEventListener('mousedown',e=>e.stopPropagation());
+  del.addEventListener('click',e=>{
+    e.stopPropagation();
+    el.remove();
+    saveFurniture();
+  });
+  el.appendChild(del);
+
+  // Drag — mousedown on the item itself (not the delete btn)
+  el.addEventListener('mousedown',e=>{
+    if(e.target===del)return;
+    dragEl=el;
+    el.classList.add('dragging');
+    const r=el.getBoundingClientRect();
+    const cr=el.parentElement.getBoundingClientRect();
+    dragOx=e.clientX-r.left;
+    dragOy=e.clientY-r.top;
+    e.preventDefault();
+  });
+
+  // Touch drag
+  el.addEventListener('touchstart',e=>{
+    if(e.target===del)return;
+    dragEl=el;
+    el.classList.add('dragging');
+    const t=e.touches[0];
+    const r=el.getBoundingClientRect();
+    dragOx=t.clientX-r.left;
+    dragOy=t.clientY-r.top;
+  },{passive:true});
+
+  // Rename on double-click
+  el.addEventListener('dblclick',e=>{
+    if(e.target===del)return;
+    const n=prompt('Rename this item:',el.dataset.label);
+    if(n&&n.trim()){
+      el.dataset.label=n.trim();
+      lbl.textContent=n.trim();
+      saveFurniture();
+    }
+  });
+
+  return el;
+}
+
+function addFurniture(label,w,h){
+  const canvas=document.getElementById('room-canvas');
+  // Stagger new items so they don't stack exactly
+  const offset=20+(canvas.querySelectorAll('.furniture-item').length*8)%80;
+  const el=makeFurnitureEl(label,w,h,offset,offset);
   canvas.appendChild(el);
   saveFurniture();
 }
-function startDrag(e){
-  dragEl=e.currentTarget;dragEl.classList.add('dragging');
-  const r=dragEl.getBoundingClientRect();const cr=dragEl.parentElement.getBoundingClientRect();
-  dragOx=e.clientX-r.left+cr.left-(dragEl.parentElement.offsetLeft);
-  dragOy=e.clientY-r.top+cr.top-(dragEl.parentElement.offsetTop);
-  e.preventDefault();
-}
-function startDragTouch(e){
-  dragEl=e.currentTarget;dragEl.classList.add('dragging');
-  const t=e.touches[0];
-  const r=dragEl.getBoundingClientRect();const cr=dragEl.parentElement.getBoundingClientRect();
-  dragOx=t.clientX-r.left+cr.left-dragEl.parentElement.offsetLeft;
-  dragOy=t.clientY-r.top+cr.top-dragEl.parentElement.offsetTop;
-}
-document.addEventListener('mousemove',e=>{if(!dragEl)return;moveDrag(e.clientX,e.clientY);});
-document.addEventListener('touchmove',e=>{if(!dragEl)return;moveDrag(e.touches[0].clientX,e.touches[0].clientY);},{passive:true});
-function moveDrag(cx,cy){
+
+// Global mouse/touch move & release
+document.addEventListener('mousemove',e=>{
+  if(!dragEl)return;
   const canvas=document.getElementById('room-canvas');
   const cr=canvas.getBoundingClientRect();
-  let x=cx-cr.left-dragOx+canvas.scrollLeft;
-  let y=cy-cr.top-dragOy+canvas.scrollTop;
+  let x=e.clientX-cr.left-dragOx;
+  let y=e.clientY-cr.top-dragOy;
   x=Math.max(0,Math.min(canvas.offsetWidth-dragEl.offsetWidth,x));
   y=Math.max(0,Math.min(canvas.offsetHeight-dragEl.offsetHeight,y));
-  dragEl.style.left=x+'px';dragEl.style.top=y+'px';
-}
-document.addEventListener('mouseup',()=>{if(dragEl){dragEl.classList.remove('dragging');saveFurniture();dragEl=null;}});
-document.addEventListener('touchend',()=>{if(dragEl){dragEl.classList.remove('dragging');saveFurniture();dragEl=null;}});
+  dragEl.style.left=x+'px';
+  dragEl.style.top=y+'px';
+});
+document.addEventListener('touchmove',e=>{
+  if(!dragEl)return;
+  const t=e.touches[0];
+  const canvas=document.getElementById('room-canvas');
+  const cr=canvas.getBoundingClientRect();
+  let x=t.clientX-cr.left-dragOx;
+  let y=t.clientY-cr.top-dragOy;
+  x=Math.max(0,Math.min(canvas.offsetWidth-dragEl.offsetWidth,x));
+  y=Math.max(0,Math.min(canvas.offsetHeight-dragEl.offsetHeight,y));
+  dragEl.style.left=x+'px';
+  dragEl.style.top=y+'px';
+},{passive:true});
+document.addEventListener('mouseup',()=>{
+  if(dragEl){dragEl.classList.remove('dragging');saveFurniture();dragEl=null;}
+});
+document.addEventListener('touchend',()=>{
+  if(dragEl){dragEl.classList.remove('dragging');saveFurniture();dragEl=null;}
+});
+
 function saveFurniture(){
   furnitureItems=[];
   document.querySelectorAll('#room-canvas .furniture-item').forEach(el=>{
-    furnitureItems.push({label:el.dataset.label,w:el.offsetWidth,h:el.offsetHeight,x:parseInt(el.style.left),y:parseInt(el.style.top)});
+    furnitureItems.push({
+      label:el.dataset.label,
+      w:el.offsetWidth,
+      h:el.offsetHeight,
+      x:parseInt(el.style.left)||0,
+      y:parseInt(el.style.top)||0
+    });
   });
   saveLocal();
 }
-function clearLayout(){if(confirm('Clear all furniture?')){document.getElementById('room-canvas').innerHTML='';furnitureItems=[];saveLocal();}}
+
+function clearLayout(){
+  if(confirm('Remove all furniture from the layout?')){
+    document.getElementById('room-canvas').innerHTML='';
+    furnitureItems=[];
+    saveLocal();
+  }
+}
+
 function restoreFurniture(){
+  const canvas=document.getElementById('room-canvas');
   furnitureItems.forEach(f=>{
-    const canvas=document.getElementById('room-canvas');
-    const el=document.createElement('div');
-    el.className='furniture-item';
-    el.style.cssText=`width:${f.w}px;height:${f.h}px;left:${f.x}px;top:${f.y}px`;
-    el.textContent=f.label;el.dataset.label=f.label;
-    el.addEventListener('mousedown',startDrag);
-    el.addEventListener('touchstart',startDragTouch,{passive:true});
-    el.addEventListener('dblclick',()=>{const n=prompt('Rename:',el.dataset.label);if(n){el.textContent=n;el.dataset.label=n;saveFurniture();}});
+    const el=makeFurnitureEl(f.label,f.w,f.h,f.x,f.y);
     canvas.appendChild(el);
   });
 }
@@ -1447,7 +1511,7 @@ function printTemplate(gameId,title){
 let pendingImportRows=[];
 
 function downloadGuestTemplate(){
-  const csv='Name,Email,Phone,Status,Guests\nJane Smith,jane@example.com,555-123-4567,Pending,2\nJohn Doe,john@example.com,555-987-6543,Yes,1';
+  const csv='Name,Email,Status,Guests\nJane Smith,jane@example.com,Pending,2\nJohn Doe,john@example.com,Yes,1';
   const blob=new Blob([csv],{type:'text/csv'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);
   a.download='guest_list_template.csv';a.click();
@@ -1515,7 +1579,7 @@ function mapRow(headers,cols){
   };
   const name=get('name','full name','guest name','guest');
   const email=get('email','e-mail','email address');
-  const phone=get('phone','phone number','mobile','cell','telephone');
+  const phone=''; // phone removed
   const rawStatus=get('status','rsvp','rsvp status');
   const count=parseInt(get('guests','# guests','guest count','count','number of guests'))||1;
   const validStatuses=['yes','no','pending'];
@@ -1525,7 +1589,7 @@ function mapRow(headers,cols){
   let issue='';
   if(!name)issue='Missing name';
   else if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))issue='Invalid email';
-  return{name,email,phone,status,count,issue};
+  return{name,email,status,count,issue};
 }
 
 function showImportPreview(rows){
@@ -1540,7 +1604,6 @@ function showImportPreview(rows){
     <tr style="${r.issue?'background:#fff8f8':''}">
       <td>${r.name||'<em style="color:#aaa">—</em>'}</td>
       <td>${r.email||'—'}</td>
-      <td>${r.phone||'—'}</td>
       <td><span class="badge ${r.status==='Yes'?'badge-green':r.status==='No'?'badge-red':'badge-muted'}">${r.status}</span></td>
       <td>${r.count}</td>
       <td style="color:#C0392B;font-size:12px">${r.issue||'<span style="color:var(--sage-dark)">✓</span>'}</td>
@@ -1554,8 +1617,8 @@ function confirmImport(){
   let added=0;
   valid.forEach(r=>{
     // Skip duplicates by name+email
-    const dup=guests.find(g=>g.name.toLowerCase()===r.name.toLowerCase()&&(g.email===r.email||(!g.email&&!r.email)));
-    if(!dup){guests.push({id:Date.now()+Math.random(),name:r.name,email:r.email,phone:r.phone,status:r.status,count:r.count});added++;}
+    const dup=guests.find(g=>g.name.toLowerCase()===r.name.toLowerCase()&&(g.email===r.email||(!g.email&&!r.email))); // phone removed
+    if(!dup){guests.push({id:Date.now()+Math.random(),name:r.name,email:r.email,status:r.status,count:r.count});added++;}
   });
   saveLocal();renderGuests();
   cancelImport();
